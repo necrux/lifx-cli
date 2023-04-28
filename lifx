@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+import devices
+import scenes
+
+devices = devices.Devices
+scenes  = scenes.Scenes
+
+devices.get()
+scenes.get()
