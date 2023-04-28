@@ -18,7 +18,6 @@ headers = {
 response = requests.get('https://api.lifx.com/v1/scenes', headers=headers)
 response = json.loads(response.content)
 
-print(response)
 scenes = []
 
 for key in range(0, len(response)):
