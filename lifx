@@ -1,10 +1,44 @@
 #!/usr/bin/env python3
 
-import devices
-import scenes
+import argparse
 
-devices = devices.Devices
-scenes  = scenes.Scenes
+from devices import Devices as d
+from scenes import Scenes as s
+import lights
 
-devices.get()
-scenes.get()
+lights = lights.Lights
+
+# Create the parser
+description = "Control LifX devices and settings via the CLI."
+epilog      = ""
+job_options = argparse.ArgumentParser(description=description, epilog=epilog)
+
+# Add the arguments
+job_options.add_argument('-d',
+                         '--devices',
+                         default = False,
+                         action  = 'store_true',
+                         help    = 'List LifX devices.')
+job_options.add_argument('-s',
+                         '--scenes',
+                         default = False,
+                         action  = 'store_true',
+                         help    = 'List LifX scenes.')
+job_options.add_argument('-t',
+                         '--toggle',
+                         default = False,
+                         action  = 'store',
+                         help    = 'Toggle the specified light.')
+
+args    = job_options.parse_args()
+devices = args.devices
+scenes  = args.scenes
+toggle  = args.toggle
+
+if devices:
+    d.get()
+if scenes:
+    s.get()
+
+if toggle:
+    lights.toggle(toggle) 
