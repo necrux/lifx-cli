@@ -4,7 +4,6 @@ class Devices:
     def get():
         import requests
         import json
-        
         from tabulate import tabulate
         from auth import Auth
 

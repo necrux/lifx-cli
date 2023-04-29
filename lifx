@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
-
+import lights
 from devices import Devices as d
 from scenes import Scenes as s
-import lights
 
 lights = lights.Lights
 
@@ -19,21 +18,27 @@ job_options.add_argument('-d',
                          default = False,
                          action  = 'store_true',
                          help    = 'List LifX devices.')
-job_options.add_argument('-s',
-                         '--scenes',
-                         default = False,
-                         action  = 'store_true',
-                         help    = 'List LifX scenes.')
 job_options.add_argument('-t',
                          '--toggle',
                          default = False,
                          action  = 'store',
                          help    = 'Toggle the specified light.')
+job_options.add_argument('-s',
+                         '--scenes',
+                         default = False,
+                         action  = 'store_true',
+                         help    = 'List LifX scenes.')
+job_options.add_argument('-a',
+                         '--activate',
+                         default = False,
+                         action  = 'store',
+                         help    = 'Activate LifX scene.')
 
-args    = job_options.parse_args()
-devices = args.devices
-scenes  = args.scenes
-toggle  = args.toggle
+args     = job_options.parse_args()
+devices  = args.devices
+toggle   = args.toggle
+scenes   = args.scenes
+scene_id = args.activate
 
 if devices:
     d.get()
@@ -42,3 +47,5 @@ if scenes:
 
 if toggle:
     lights.toggle(toggle) 
+if scene_id:
+    s.activate(scene_id)

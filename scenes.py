@@ -4,7 +4,6 @@ class Scenes:
     def get():
         import requests
         import json
-        
         from tabulate import tabulate
         from auth import Auth
         
@@ -19,3 +18,11 @@ class Scenes:
             scenes += [[response[key]["name"], response[key]["uuid"]]]
         
         print(tabulate(scenes, headers=["Name", "ID"]))
+
+    def activate(scene_id):
+        import requests
+        from auth import Auth
+
+        auth = Auth.auth()
+
+        response = requests.put(f'https://api.lifx.com/v1/scenes/scene_id:{scene_id}/activate', headers=auth)

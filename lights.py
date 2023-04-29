@@ -4,7 +4,6 @@ class Lights:
     def toggle(light):
         import requests
         import json
-        
         from auth import Auth
 
         auth = Auth.auth()
