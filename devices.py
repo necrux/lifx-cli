@@ -23,6 +23,6 @@ class Devices:
         devices = []
         
         for key in range(0, len(response)):
-            devices += [[response[key]["label"], response[key]["id"]]]
+            devices += [[response[key]["label"], response[key]["id"],response[key]["power"], response[key]["connected"]]]
         
-        print(tabulate(devices, headers=["Name", "ID"]))
+        print(tabulate(devices, headers=["Name", "ID", "State", "Conntected"]))
