@@ -3,21 +3,14 @@
 class Devices:
     def get():
         import requests
-        import configparser
         import json
         
         from tabulate import tabulate
-        
-        config = configparser.ConfigParser()
-        config.read('/home/wes/.keys')
-        
-        token = config['lifx']['token']
-        
-        headers = {
-            "Authorization": "Bearer %s" % token,
-        }
-        
-        response = requests.get('https://api.lifx.com/v1/lights/all', headers=headers)
+        from auth import Auth
+
+        auth = Auth.auth()
+
+        response = requests.get('https://api.lifx.com/v1/lights/all', headers=auth)
         response = json.loads(response.content)
         
         devices = []

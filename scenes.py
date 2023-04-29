@@ -3,21 +3,14 @@
 class Scenes:
     def get():
         import requests
-        import configparser
         import json
         
         from tabulate import tabulate
+        from auth import Auth
         
-        config = configparser.ConfigParser()
-        config.read('/home/wes/.keys')
-        
-        token = config['lifx']['token']
-        
-        headers = {
-            "Authorization": "Bearer %s" % token,
-        }
-        
-        response = requests.get('https://api.lifx.com/v1/scenes', headers=headers)
+        auth = Auth.auth()
+
+        response = requests.get('https://api.lifx.com/v1/scenes', headers=auth)
         response = json.loads(response.content)
         
         scenes = []
