@@ -17,6 +17,7 @@ class Scenes:
         for key in range(0, len(response)):
             scenes += [[response[key]["name"], response[key]["uuid"]]]
         
+        scenes.sort()
         print(tabulate(scenes, headers=["Name", "ID"]))
 
     def activate(scene_id):
