@@ -15,7 +15,13 @@ class Devices:
         devices = []
         
         for key in range(0, len(response)):
-            devices += [[response[key]["label"], response[key]["id"],response[key]["power"], response[key]["connected"]]]
+            label     = response[key]["label"]
+            ident     = response[key]["id"]
+            power     = response[key]["power"]
+            connected = response[key]["connected"]
+            group     = response[key]["group"]["name"]
+
+            devices += [[label, ident, power, connected, group]]
         
         devices.sort()
-        print(tabulate(devices, headers=["Name", "ID", "State", "Connected"]))
+        print(tabulate(devices, headers=["Name", "ID", "State", "Connected", "Group"]))
