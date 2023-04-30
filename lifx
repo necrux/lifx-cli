@@ -33,6 +33,11 @@ job_options.add_argument('-t',
                          default = False,
                          action  = 'store_true',
                          help    = 'Toggle the specified light.')
+job_options.add_argument('-e',
+                         '--state',
+                         default = False,
+                         action  = 'store_true',
+                         help    = 'Set the state for the specified light. (currently only supports color)')
 job_options.add_argument('-c',
                          '--color',
                          default = 'green',
@@ -57,6 +62,7 @@ devices  = args.devices
 scenes   = args.scenes
 light_id = args.light
 toggle   = args.toggle
+state    = args.state
 color    = args.color
 scene_id = args.activate
 breathe  = args.breathe
@@ -73,6 +79,8 @@ if toggle:
     lights.toggle(light_id)
 if scene_id:
     s.activate(scene_id)
+if state:
+    lights.set_state(light_id, color)
 
 # Effects
 if breathe:

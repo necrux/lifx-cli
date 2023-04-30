@@ -10,6 +10,20 @@ class Lights:
 
         response = requests.post(f"https://api.lifx.com/v1/lights/{light_id}/toggle", headers=auth)
 
+    def set_state(light_id, color):
+        import requests
+        import json
+        from auth import Auth
+
+        auth = Auth.auth()
+
+        payload = {
+            "power": "on",
+            "color": f"{color}",
+        }
+
+        response = requests.put(f"https://api.lifx.com/v1/lights/{light_id}/state", data=payload, headers=auth)
+
     def breathe_effect(light_id, color):
         import requests
         import json
