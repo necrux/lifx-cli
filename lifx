@@ -2,10 +2,9 @@
 
 import argparse
 import lights
+from lights import Lights as l
 from devices import Devices as d
 from scenes import Scenes as s
-
-lights = lights.Lights
 
 # Create the parser
 description = "Control LIFX devices and settings via the CLI."
@@ -100,14 +99,14 @@ if scenes:
 
 # Controls (non-effects)
 if toggle:
-    lights.toggle(light_id)
+    l.toggle(light_id)
 if scene_id:
     s.activate(scene_id)
 if state:
-    lights.set_state(light_id, color, power, brightness, duration, infrared)
+    l.set_state(light_id, color, power, brightness, duration, infrared)
 
 # Effects
 if breathe:
-    lights.breathe_effect(light_id, color)
+    l.breathe_effect(light_id, color)
 if stop:
-    lights.stop_effect(light_id)
+    l.stop_effect(light_id)
