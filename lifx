@@ -1,112 +1,115 @@
 #!/usr/bin/env python3
 
 import argparse
-import lights
-from lights import Lights as l
-from devices import Devices as d
-from scenes import Scenes as s
+from devices import Devices
+from lights import Lights
+from scenes import Scenes
+
+device = Devices()
+light = Lights()
+scene = Scenes()
 
 # Create the parser
 description = "Control LIFX devices and settings via the CLI."
-epilog      = ""
+epilog = ""
 job_options = argparse.ArgumentParser(description=description, epilog=epilog)
 
 # Add the arguments
 job_options.add_argument('-d',
                          '--devices',
-                         default = False,
-                         action  = 'store_true',
-                         help    = 'List LIFX devices.')
+                         default=False,
+                         action='store_true',
+                         help='List LIFX devices.')
 job_options.add_argument('-s',
                          '--scenes',
-                         default = False,
-                         action  = 'store_true',
-                         help    = 'List LIFX scenes.')
+                         default=False,
+                         action='store_true',
+                         help='List LIFX scenes.')
 job_options.add_argument('-l',
                          '--light',
-                         default = 'all',
-                         action  = 'store',
-                         help    = 'Specify the light to control. [Default: all]')
+                         default='all',
+                         action='store',
+                         help='Specify the light to control. [Default: all]')
 job_options.add_argument('-t',
                          '--toggle',
-                         default = False,
-                         action  = 'store_true',
-                         help    = 'Toggle the specified light.')
+                         default=False,
+                         action='store_true',
+                         help='Toggle the specified light.')
 job_options.add_argument('-e',
                          '--state',
-                         default = False,
-                         action  = 'store_true',
-                         help    = 'Set the state for the specified light.')
+                         default=False,
+                         action='store_true',
+                         help='Set the state for the specified light.')
 job_options.add_argument('-c',
                          '--color',
-                         default = 'green',
-                         action  = 'store',
-                         help    = 'Use the specified color. [Default: green]')
+                         default='green',
+                         action='store',
+                         help='Use the specified color. [Default: green]')
 job_options.add_argument('-p',
                          '--power',
-                         default = 'on',
-                         action  = 'store',
-                         help    = 'State: on or off [Default: on]')
+                         default='on',
+                         action='store',
+                         help='State: on or off [Default: on]')
 job_options.add_argument('-b',
                          '--brightness',
-                         default = 0.5,
-                         action  = 'store',
-                         help    = 'State: 0.0 to 1.0 [Default: 0.5]')
+                         default=0.5,
+                         action='store',
+                         help='State: 0.0 to 1.0 [Default: 0.5]')
 job_options.add_argument('-i',
                          '--infrared',
-                         default = 0.5,
-                         action  = 'store',
-                         help    = 'State: 0.0 to 1.0 [Default: 1.0]')
+                         default=0.5,
+                         action='store',
+                         help='State: 0.0 to 1.0 [Default: 1.0]')
 job_options.add_argument('-u',
                          '--duration',
-                         default = 1,
-                         action  = 'store',
-                         help    = 'State: How long the action will take (in seconds). [Default: 1]')
+                         default=1,
+                         action='store',
+                         help='State: How long the action will take (in seconds). [Default: 1]')
 job_options.add_argument('-a',
                          '--activate',
-                         default = False,
-                         action  = 'store',
-                         help    = 'Activate scene.')
+                         default=False,
+                         action='store',
+                         help='Activate scene.')
 job_options.add_argument('--breathe',
-                         default = False,
-                         action  = 'store_true',
-                         help    = 'Effects: Breathe')
+                         default=False,
+                         action='store_true',
+                         help='Effects: Breathe')
 job_options.add_argument('--stop',
-                         default = False,
-                         action  = 'store_true',
-                         help    = 'Effects: Stop')
+                         default=False,
+                         action='store_true',
+                         help='Effects: Stop')
 
-args       = job_options.parse_args()
-devices    = args.devices
-scenes     = args.scenes
-light_id   = args.light
-toggle     = args.toggle
-state      = args.state
-color      = args.color
-power      = args.power
+args = job_options.parse_args()
+devices = args.devices
+scenes = args.scenes
+light_id = args.light
+toggle = args.toggle
+state = args.state
+color = args.color
+power = args.power
 brightness = args.brightness
-infrared   = args.infrared
-duration   = args.duration
-scene_id   = args.activate
-breathe    = args.breathe
-stop       = args.stop
+infrared = args.infrared
+duration = args.duration
+scene_id = args.activate
+breathe = args.breathe
+stop = args.stop
 
 # Lists
 if devices:
-    d.get()
+    device.get()
 if scenes:
-    s.get()
+    scene.get()
 
 # Controls (non-effects)
 if toggle:
-    l.toggle(light_id)
+    light.toggle(light_id)
 if scene_id:
-    s.activate(scene_id)
+    scene.activate(scene_id)
 if state:
-    l.set_state(light_id, color, power, brightness, duration, infrared)
+    light.set_state(light_id, color, power, brightness, duration, infrared)
 
 # Effects
 if breathe:
-    l.breathe_effect(light_id, color)
+    light.breathe_effect(light_id, color)
 if stop:
-    l.stop_effect(light_id)
+    light.stop_effect(light_id)

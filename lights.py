@@ -1,39 +1,38 @@
 #!/usr/bin/env python3
 
 class Lights:
-    def toggle(light_id):
+    def toggle(self, light_id):
         import requests
-        import json
         from auth import Auth
 
-        auth = Auth.auth()
+        auth = Auth()
+        auth_headers = auth.auth()
 
-        response = requests.post(f"https://api.lifx.com/v1/lights/{light_id}/toggle", headers=auth)
+        requests.post(f"https://api.lifx.com/v1/lights/{light_id}/toggle", headers=auth_headers)
 
-    def set_state(light_id, color, power, brightness, duration, infrared):
+    def set_state(self, light_id, color, power, brightness, duration, infrared):
         import requests
-        import json
         from auth import Auth
 
-        auth = Auth.auth()
+        auth = Auth()
+        auth_headers = auth.auth()
 
         payload = {
-            "power": "on",
-            "color": f"{color}",
             "power": f"{power}",
+            "color": f"{color}",
             "brightness": f"{brightness}",
             "duration": f"{duration}",
             "infrared": f"{infrared}",
         }
 
-        response = requests.put(f"https://api.lifx.com/v1/lights/{light_id}/state", data=payload, headers=auth)
+        requests.put(f"https://api.lifx.com/v1/lights/{light_id}/state", data=payload, headers=auth_headers)
 
-    def breathe_effect(light_id, color):
+    def breathe_effect(self, light_id, color):
         import requests
-        import json
         from auth import Auth
 
-        auth = Auth.auth()
+        auth = Auth()
+        auth_headers = auth.auth()
 
         data = {
             "period": 2,
@@ -41,17 +40,17 @@ class Lights:
             "color": f"{color}",
         }
 
-        response = requests.post(f"https://api.lifx.com/v1/lights/{light_id}/effects/breathe", data=data, headers=auth)
+        requests.post(f"https://api.lifx.com/v1/lights/{light_id}/effects/breathe", data=data, headers=auth_headers)
 
-    def stop_effect(light_id):
+    def stop_effect(self, light_id):
         import requests
-        import json
         from auth import Auth
 
-        auth = Auth.auth()
+        auth = Auth()
+        auth_headers = auth.auth()
 
         data = {
             "power_off": True
         }
 
-        response = requests.post(f"https://api.lifx.com/v1/lights/{light_id}/effects/off", data=data, headers=auth)
+        requests.post(f"https://api.lifx.com/v1/lights/{light_id}/effects/off", data=data, headers=auth_headers)

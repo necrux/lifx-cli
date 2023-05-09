@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 
 class Scenes:
-    def get():
+    def get(self):
         import requests
         import json
         from tabulate import tabulate
         from auth import Auth
-        
-        auth = Auth.auth()
 
-        response = requests.get('https://api.lifx.com/v1/scenes', headers=auth)
+        auth = Auth()
+        auth_headers = auth.auth()
+
+        response = requests.get('https://api.lifx.com/v1/scenes', headers=auth_headers)
         response = json.loads(response.content)
         
         scenes = []
@@ -20,10 +21,11 @@ class Scenes:
         scenes.sort()
         print(tabulate(scenes, headers=["Name", "ID"]))
 
-    def activate(scene_id):
+    def activate(self, scene_id):
         import requests
         from auth import Auth
 
-        auth = Auth.auth()
+        auth = Auth()
+        auth_headers = auth.auth()
 
-        response = requests.put(f'https://api.lifx.com/v1/scenes/scene_id:{scene_id}/activate', headers=auth)
+        requests.put(f'https://api.lifx.com/v1/scenes/scene_id:{scene_id}/activate', headers=auth_headers)

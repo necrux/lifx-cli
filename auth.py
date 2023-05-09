@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 class Auth:
-    def auth():
+    def auth(self):
         import configparser
         
         config = configparser.ConfigParser()
