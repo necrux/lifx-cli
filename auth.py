@@ -2,6 +2,7 @@
 
 class Auth:
     def auth(self):
+        """Returns the authentication headers to authenticate to LIFX."""
         import configparser
         
         config = configparser.ConfigParser()

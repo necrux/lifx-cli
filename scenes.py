@@ -2,6 +2,7 @@
 
 class Scenes:
     def get(self):
+        """Prints a list of all scenes on this account."""
         import requests
         import json
         from tabulate import tabulate
@@ -22,6 +23,7 @@ class Scenes:
         print(tabulate(scenes, headers=["Name", "ID"]))
 
     def activate(self, scene_id):
+        """Activates the specified scene. Requires scene UUID."""
         import requests
         from auth import Auth
 

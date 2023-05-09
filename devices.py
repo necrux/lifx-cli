@@ -2,6 +2,7 @@
 
 class Devices:
     def get(self):
+        """Prints a list of all LIFX devices on this account."""
         import requests
         import json
         from tabulate import tabulate
