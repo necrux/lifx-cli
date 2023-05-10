@@ -2,7 +2,7 @@
 
 class Scenes:
     def get(self):
-        """Prints a list of all scenes on this account."""
+        """Print a list of all scenes on this account."""
         import requests
         import json
         from tabulate import tabulate
