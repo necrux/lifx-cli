@@ -13,7 +13,7 @@ scene = Scenes()
 
 # Create the parser
 description = 'Control LIFX devices and settings via the CLI.'
-epilog = ''
+epilog = 'Run `lifx --configure` to setup authentication.'
 job_options = argparse.ArgumentParser(description=description, epilog=epilog)
 
 # Add the arguments
@@ -35,7 +35,12 @@ job_options.add_argument('-l',
                          '--light',
                          default='all',
                          action='store',
-                         help='Specify the light to control. [Default: all]')
+                         help='Specify the light/group ID to control; must include -g for groups.')
+job_options.add_argument('-g',
+                         '--group',
+                         default=False,
+                         action='store_true',
+                         help='Specify whether or not the target light is a group.')
 job_options.add_argument('-t',
                          '--toggle',
                          default=False,
@@ -90,6 +95,7 @@ configure = args.configure
 devices = args.devices
 scenes = args.scenes
 light_id = args.light
+group = args.group
 toggle = args.toggle
 state = args.state
 color = args.color
@@ -114,14 +120,14 @@ if scenes:
 
 # Controls (non-effects)
 if toggle:
-    light.toggle(light_id)
+    light.toggle(light_id, group)
 if scene_id:
     scene.activate(scene_id)
 if state:
-    light.set_state(light_id, color, power, brightness, duration, infrared)
+    light.set_state(light_id, group, color, power, brightness, duration, infrared)
 
 # Effects
 if breathe:
-    light.breathe_effect(light_id, color)
+    light.breathe_effect(light_id, group, color)
 if stop:
-    light.stop_effect(light_id)
+    light.stop_effect(light_id, group)

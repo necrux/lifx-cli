@@ -22,8 +22,9 @@ class Devices:
             power = response[key]["power"]
             connected = response[key]["connected"]
             group = response[key]["group"]["name"]
+            group_id = response[key]["group"]["id"]
 
-            devices += [[label, ident, power, connected, group]]
+            devices += [[label, ident, power, connected, group, group_id]]
 
         devices.sort()
-        print(tabulate(devices, headers=["Name", "ID", "State", "Connected", "Group"]))
+        print(tabulate(devices, headers=["Name", "ID", "State", "Connected", "Group", "Group ID"]))
