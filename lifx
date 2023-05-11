@@ -1,20 +1,26 @@
 #!/usr/bin/env python3
 
 import argparse
+from auth import Auth
 from devices import Devices
 from lights import Lights
 from scenes import Scenes
 
+auth = Auth()
 device = Devices()
 light = Lights()
 scene = Scenes()
 
 # Create the parser
-description = "Control LIFX devices and settings via the CLI."
-epilog = ""
+description = 'Control LIFX devices and settings via the CLI.'
+epilog = ''
 job_options = argparse.ArgumentParser(description=description, epilog=epilog)
 
 # Add the arguments
+job_options.add_argument('--configure',
+                         default=False,
+                         action='store_true',
+                         help='Add your LIFX token to the local authentication file: ~/.keys')
 job_options.add_argument('-d',
                          '--devices',
                          default=False,
@@ -80,6 +86,7 @@ job_options.add_argument('--stop',
                          help='Effects: Stop')
 
 args = job_options.parse_args()
+configure = args.configure
 devices = args.devices
 scenes = args.scenes
 light_id = args.light
@@ -93,6 +100,11 @@ duration = args.duration
 scene_id = args.activate
 breathe = args.breathe
 stop = args.stop
+
+# Configure authentication.
+if configure:
+    auth.configure()
+    exit(0)
 
 # Lists
 if devices:
