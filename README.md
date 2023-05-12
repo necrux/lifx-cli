@@ -2,7 +2,7 @@
 Playing around with the LifX API with the goal of creating a CLI.
 
 ## Authentication
-Authentication is done using your token which is stored in `~/.keys`. This can be configured by running `lifx --configure`. 
+Authentication is done using your token stored in `~/.keys`. This can be configured manually or by running `lifx --configure`.
 
 **Example `~/.keys` *ini* file:**
 
@@ -21,14 +21,26 @@ Refer to the [documentation](https://api.developer.lifx.com/reference/authentica
 
 ## Targeting Lights
 
-The LIFX CLI primary uses device/group/scene IDs to operate, however LIFX does provide multiple options for the light 'selectors'. While not yet officially available via the CLI, you can tap into these options by prefacing your light ID with the correct prefix (if there are spaces in the name, simply enclose in `"`).
+The LIFX CLI primary uses device/group/scene IDs to operate, however LIFX does provide multiple options for the light 'selectors'. While not yet officially available via the CLI, you can tap into these options by prefacing your light ID accordingly (if there are spaces in the name, simply enclose in `"`).
 
 ```
-lifx --toggle --light all
-lifx --toggle --light "label:Left Lamp"
-lifx --toggle --light "group: Upstairs Lights"
-lifx --toggle --light "location_id:1d6fe8ef0fde4c6d77b0012dc736662c"
-lifx --toggle --light "location:Home"
+lifx lights --toggle all
+lifx lights --toggle "label:Left Lamp"
+lifx lights --toggle "group: Upstairs Lights"
+lifx lights --toggle "location_id:1d6fe8ef0fde4c6d77b0012dc736662c"
+lifx lights --toggle "location:Home"
 ```
 
-Use the `--devices` options in order to get a list of devices with their device ID and corresponding group ID. Use the `--scenes` option to get a list of scenes and their corresponding IDs.
+### Finding the Proper ID
+
+In order to get a listing of device and group IDs, simply run `--list` with the `lights` sub-command.
+
+```
+lifx lights --list
+```
+
+In order to get a listing of scene IDs, run the same command for `scenes`.
+
+```
+lifx scenes --list
+```

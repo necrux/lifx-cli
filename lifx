@@ -11,125 +11,188 @@ device = Devices()
 light = Lights()
 scene = Scenes()
 
-# Create the parser
-description = 'Control LIFX devices and settings via the CLI.'
-epilog = 'Run `lifx --configure` to setup authentication.'
-job_options = argparse.ArgumentParser(description=description, epilog=epilog)
 
-# Add the arguments
-job_options.add_argument('--configure',
-                         default=False,
-                         action='store_true',
-                         help='Add your LIFX token to the local authentication file: ~/.keys')
-job_options.add_argument('-d',
-                         '--devices',
-                         default=False,
-                         action='store_true',
-                         help='List LIFX devices.')
-job_options.add_argument('-s',
-                         '--scenes',
-                         default=False,
-                         action='store_true',
-                         help='List LIFX scenes.')
-job_options.add_argument('-l',
-                         '--light',
-                         default='all',
-                         action='store',
-                         metavar='ID',
-                         help='Specify the light/group ID to control; must include -g for groups.')
-job_options.add_argument('-g',
-                         '--group',
-                         default=False,
-                         action='store_true',
-                         help='Specify whether or not the target light is a group.')
-job_options.add_argument('-t',
-                         '--toggle',
-                         default=False,
-                         action='store_true',
-                         help='Toggle the specified light.')
-job_options.add_argument('-e',
-                         '--state',
-                         default=False,
-                         action='store_true',
-                         help='Set the state for the specified light.')
-job_options.add_argument('-c',
-                         '--color',
-                         default='green',
-                         action='store',
-                         help='Use the specified color. [Default: green]')
-job_options.add_argument('-p',
-                         '--power',
-                         default='on',
-                         action='store',
-                         help='State: on or off [Default: on]')
-job_options.add_argument('-b',
-                         '--brightness',
-                         default=0.5,
-                         action='store',
-                         help='State: 0.0 to 1.0 [Default: 0.5]')
-job_options.add_argument('-i',
-                         '--infrared',
-                         default=0.5,
-                         action='store',
-                         help='State: 0.0 to 1.0 [Default: 1.0]')
-job_options.add_argument('-u',
-                         '--duration',
-                         default=1,
-                         action='store',
-                         help='State: How long the action will take (in seconds). [Default: 1]')
-job_options.add_argument('-a',
-                         '--activate',
-                         default=False,
-                         action='store',
-                         metavar='ID',
-                         help='Activate scene.')
-job_options.add_argument('--breathe',
-                         default=False,
-                         action='store_true',
-                         help='Effects: Breathe')
-job_options.add_argument('--stop',
-                         default=False,
-                         action='store_true',
-                         help='Effects: Stop')
+def lights_sub_command(args):
+    devices = args.list_devices
+    light_id = args.light_id
+    toggle = args.toggle
+    group = args.group
+    state = args.state
+    color = args.color
+    power = args.power
+    brightness = args.brightness
+    infrared = args.infrared
+    duration = args.duration
 
-args = job_options.parse_args()
-configure = args.configure
-devices = args.devices
-scenes = args.scenes
-light_id = args.light
-group = args.group
-toggle = args.toggle
-state = args.state
-color = args.color
-power = args.power
-brightness = args.brightness
-infrared = args.infrared
-duration = args.duration
-scene_id = args.activate
-breathe = args.breathe
-stop = args.stop
+    if devices:
+        device.get()
 
-# Configure authentication.
-if configure:
-    auth.configure()
-    exit(0)
+    if toggle:
+        light.toggle(light_id, group)
 
-# Lists
-if devices:
-    device.get()
-if scenes:
-    scene.get()
+    if state:
+        light.set_state(light_id, group, color, power, brightness, duration, infrared)
 
-# Controls (non-effects)
-if toggle:
-    light.toggle(light_id, group)
-if scene_id:
-    scene.activate(scene_id)
-if state:
-    light.set_state(light_id, group, color, power, brightness, duration, infrared)
 
-# Effects
-if breathe:
-    light.breathe_effect(light_id, group, color)
-if stop:
-    light.stop_effect(light_id, group)
+def scenes_sub_command(args):
+    scenes = args.list_scenes
+    scene_id = args.scene_id
+
+    if scenes:
+        scene.get()
+
+    if scene_id:
+        scene.activate(scene_id)
+
+
+def effects_sub_command(args):
+    light_id = args.light_id
+    group = args.group
+    color = args.color
+    breathe = args.breathe
+    stop = args.stop
+
+    if breathe:
+        light.breathe_effect(light_id, group, color)
+    if stop:
+        light.stop_effect(light_id, group)
+
+
+def main():
+    # Create the parser
+    description = 'Control LIFX devices and settings via the CLI.'
+    epilog = 'Run `lifx --configure` to setup authentication.'
+    job_options = argparse.ArgumentParser(description=description, epilog=epilog)
+
+    # Add the arguments
+    job_options.add_argument('-c',
+                             '--configure',
+                             default=False,
+                             action='store_true',
+                             help='Add your LIFX token to the local authentication file: ~/.keys')
+
+    # Add the 'lights' sub-command.
+    light_job_options = job_options.add_subparsers(dest='command')
+    light_command = light_job_options.add_parser('lights', help='Light specific functions.')
+    light_command.add_argument('-l',
+                               '--list',
+                               default=False,
+                               dest='list_devices',
+                               action='store_true',
+                               help='List LIFX devices.')
+    light_command.add_argument('-i',
+                               '--id',
+                               default=False,
+                               dest='light_id',
+                               action='store',
+                               metavar='ID',
+                               help='Specify the light ID.')
+    light_command.add_argument('-t',
+                               '--toggle',
+                               default=False,
+                               dest='toggle',
+                               action='store_true',
+                               help='Toggle the specified light.')
+    light_command.add_argument('-g',
+                               '--group',
+                               default=False,
+                               dest='group',
+                               action='store_true',
+                               help='Specify whether or not the target light is a group.')
+    light_command.add_argument('-s',
+                               '--state',
+                               default=False,
+                               action='store_true',
+                               help='Set the state for the specified light.')
+    light_command.add_argument('-c',
+                               '--color',
+                               default='green',
+                               action='store',
+                               help='Use the specified color. [Default: green]')
+    light_command.add_argument('-p',
+                               '--power',
+                               default='on',
+                               action='store',
+                               help='State: on or off [Default: on]')
+    light_command.add_argument('-b',
+                               '--brightness',
+                               default=0.5,
+                               action='store',
+                               help='State: 0.0 to 1.0 [Default: 0.5]')
+    light_command.add_argument('-r',
+                               '--infrared',
+                               default=0.5,
+                               action='store',
+                               help='State: 0.0 to 1.0 [Default: 1.0]')
+    light_command.add_argument('-u',
+                               '--duration',
+                               default=1,
+                               action='store',
+                               help='State: How long the action will take (in seconds). [Default: 1]')
+
+    # Add the 'scenes' sub-command.
+    scene_command = light_job_options.add_parser('scenes', help='Scene specific functions.')
+    scene_command.add_argument('-l',
+                               '--list',
+                               default=False,
+                               dest='list_scenes',
+                               action='store_true',
+                               help='List LIFX scenes.')
+    scene_command.add_argument('-i',
+                               '--id',
+                               default=False,
+                               dest='scene_id',
+                               action='store',
+                               metavar='ID',
+                               help='Activate scene.')
+
+    # Add the 'effects' sub-command.
+    effect_command = light_job_options.add_parser('effects', help='Effects specific functions.')
+    effect_command.add_argument('-i',
+                                '--id',
+                                default=False,
+                                dest='light_id',
+                                action='store',
+                                help='Specify the light ID.')
+    effect_command.add_argument('-g',
+                                '--group',
+                                default=False,
+                                action='store_true',
+                                help='Specify whether or not the target light is a group.')
+    effect_command.add_argument('-c',
+                                '--color',
+                                default=False,
+                                action='store',
+                                help='Use the specified color. [Default: green]')
+    effect_command.add_argument('--breathe',
+                                default=False,
+                                action='store_true',
+                                help='Effects: Breathe')
+    effect_command.add_argument('--stop',
+                                default=False,
+                                action='store_true',
+                                help='Effects: Stop')
+
+    args = job_options.parse_args()
+    configure = args.configure
+
+    # Configure authentication.
+    if configure:
+        auth.configure()
+        exit(0)
+
+    # The 'lights' sub-command.
+    if args.command == 'lights':
+        lights_sub_command(args)
+
+    # The 'scenes' sub-command.
+    if args.command == 'scenes':
+        scenes_sub_command(args)
+
+    # The 'effects' sub-command.
+    if args.command == 'effects':
+        effects_sub_command(args)
+
+
+if __name__ == '__main__':
+    main()
