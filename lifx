@@ -153,6 +153,7 @@ def main():
                                 default=False,
                                 dest='light_id',
                                 action='store',
+                                metavar='ID',
                                 help='Specify the light ID.')
     effect_command.add_argument('-g',
                                 '--group',
