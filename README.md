@@ -1,5 +1,5 @@
 # The Unofficial LIFX CLI
-Playing around with the LifX API with the goal of creating a CLI.
+Playing around with the LifX API with the goal of creating a feature-rich CLI.
 
 ## Authentication
 Authentication is done using your token stored in `~/.keys`. This can be configured manually or by running `lifx --configure`.
