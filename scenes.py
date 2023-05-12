@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 
 class Scenes:
-    def get(self):
-        """Print a list of all scenes on this account."""
-        import requests
-        import json
-        from tabulate import tabulate
+
+    def __init__(self):
         from auth import Auth
 
-        auth = Auth()
-        auth_headers = auth.auth()
+        self.auth = Auth()
+        self.auth_headers = self.auth.auth()
 
-        response = requests.get('https://api.lifx.com/v1/scenes', headers=auth_headers)
+    def get(self):
+        """Print a list of all scenes on this account."""
+        import json
+        from requests import get
+        from tabulate import tabulate
+
+        response = get('https://api.lifx.com/v1/scenes', headers=self.auth_headers)
         response = json.loads(response.content)
         
         scenes = []
@@ -24,10 +27,6 @@ class Scenes:
 
     def activate(self, scene_id):
         """Activates the specified scene. Requires scene UUID."""
-        import requests
-        from auth import Auth
+        from requests import put
 
-        auth = Auth()
-        auth_headers = auth.auth()
-
-        requests.put(f'https://api.lifx.com/v1/scenes/scene_id:{scene_id}/activate', headers=auth_headers)
+        put(f'https://api.lifx.com/v1/scenes/scene_id:{scene_id}/activate', headers=self.auth_headers)
