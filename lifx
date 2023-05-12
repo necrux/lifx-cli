@@ -50,11 +50,14 @@ def effects_sub_command(args):
     group = args.group
     color = args.color
     breathe = args.breathe
+    pulse = args.pulse
     stop = args.stop
 
     if breathe:
         light.breathe_effect(light_id, group, color)
-    if stop:
+    elif pulse:
+        light.pulse_effect(light_id, group, color)
+    elif stop:
         light.stop_effect(light_id, group)
 
 
@@ -147,7 +150,11 @@ def main():
                                help='Activate scene.')
 
     # Add the 'effects' sub-command.
-    effect_command = light_job_options.add_parser('effects', help='Effects specific functions.')
+    effects_description = 'Control lighting effects.'
+    effects_epilog = "Note: The CLI can only control effects stored on your light's firmware."
+    effects_help = 'Effects specific functions.'
+    effect_command = light_job_options.add_parser('effects', description=effects_description,
+                                                  epilog=effects_epilog, help=effects_help)
     effect_command.add_argument('-i',
                                 '--id',
                                 default=False,
@@ -162,13 +169,17 @@ def main():
                                 help='Specify whether or not the target light is a group.')
     effect_command.add_argument('-c',
                                 '--color',
-                                default=False,
-                                action='store',
-                                help='Use the specified color. [Default: green]')
+                                default=[],
+                                action='append',
+                                help='Use the specified color. Use multiple -c options to alternate colors.')
     effect_command.add_argument('--breathe',
                                 default=False,
                                 action='store_true',
                                 help='Effects: Breathe')
+    effect_command.add_argument('--pulse',
+                                default=False,
+                                action='store_true',
+                                help='Effects: Pulse')
     effect_command.add_argument('--stop',
                                 default=False,
                                 action='store_true',
