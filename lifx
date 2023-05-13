@@ -2,14 +2,25 @@
 
 import argparse
 from auth import Auth
+from colors import Colors
 from devices import Devices
 from lights import Lights
 from scenes import Scenes
 
 auth = Auth()
+colors = Colors()
 device = Devices()
 light = Lights()
 scene = Scenes()
+
+logo = """
+██      ██ ███████ ██   ██      ██████ ██      ██
+██      ██ ██       ██ ██      ██      ██      ██
+██      ██ █████     ███       ██      ██      ██
+██      ██ ██       ██ ██      ██      ██      ██
+███████ ██ ██      ██   ██      ██████ ███████ ██
+
+"""
 
 
 def lights_sub_command(args):
@@ -46,6 +57,7 @@ def scenes_sub_command(args):
 
 
 def effects_sub_command(args):
+    list_effects = args.list_effects
     light_id = args.light_id
     group = args.group
     color = args.color
@@ -53,6 +65,8 @@ def effects_sub_command(args):
     pulse = args.pulse
     stop = args.stop
 
+    if list_effects:
+        light.list_effects()
     if breathe:
         light.breathe_effect(light_id, group, color)
     elif pulse:
@@ -61,7 +75,19 @@ def effects_sub_command(args):
         light.stop_effect(light_id, group)
 
 
+def colors_sub_command(args):
+    list_colors = args.list_colors
+    provided_color = args.colors
+
+    if list_colors:
+        colors.color_information()
+
+    if provided_color:
+        colors.validate_color(provided_color)
+
+
 def main():
+    print(logo)
     # Create the parser
     description = 'Control LIFX devices and settings via the CLI.'
     epilog = 'Run `lifx --configure` to setup authentication.'
@@ -101,7 +127,7 @@ def main():
                                default=False,
                                dest='group',
                                action='store_true',
-                               help='Specify whether or not the target light is a group.')
+                               help='Specify whether or not the target is a group.')
     light_command.add_argument('-s',
                                '--state',
                                default=False,
@@ -155,6 +181,12 @@ def main():
     effects_help = 'Effects specific functions.'
     effect_command = light_job_options.add_parser('effects', description=effects_description,
                                                   epilog=effects_epilog, help=effects_help)
+    effect_command.add_argument('-l',
+                                '--list',
+                                default=False,
+                                dest='list_effects',
+                                action='store_true',
+                                help='List effects supported by the LIFX CLI.')
     effect_command.add_argument('-i',
                                 '--id',
                                 default=False,
@@ -166,7 +198,7 @@ def main():
                                 '--group',
                                 default=False,
                                 action='store_true',
-                                help='Specify whether or not the target light is a group.')
+                                help='Specify whether or not the target is a group.')
     effect_command.add_argument('-c',
                                 '--color',
                                 default=[],
@@ -184,6 +216,24 @@ def main():
                                 default=False,
                                 action='store_true',
                                 help='Effects: Stop')
+
+    # Add the 'Colors' sub-command.
+    colors_description = 'Explore all of the color-related options!'
+    colors_help = 'Learn how to provide colors to the CLI.'
+    color_command = light_job_options.add_parser('colors', description=colors_description,
+                                                 help=colors_help)
+    color_command.add_argument('-l',
+                               '--list',
+                               default=False,
+                               dest='list_colors',
+                               action='store_true',
+                               help='List color options supported by the LIFX CLI.')
+    color_command.add_argument('-c',
+                               '--color',
+                               default=False,
+                               dest='colors',
+                               action='store',
+                               help='Validate a color using the LIFX API.')
 
     args = job_options.parse_args()
     configure = args.configure
@@ -204,6 +254,10 @@ def main():
     # The 'effects' sub-command.
     if args.command == 'effects':
         effects_sub_command(args)
+
+    # The 'colors' sub-command.
+    if args.command == 'colors':
+        colors_sub_command(args)
 
 
 if __name__ == '__main__':

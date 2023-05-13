@@ -17,7 +17,7 @@ Alternatively, you can override this value by setting the `LIFX` environment var
 export LIFX=FAKE_TOKEN
 ```
 
-Refer to the [documentation](https://api.developer.lifx.com/reference/authentication) in order to generate your own token.
+Refer to the [documentation](https://api.developer.lifx.com/reference/how-to-use-the-following-examples) in order to generate your own token.
 
 ## Targeting Lights
 
@@ -44,3 +44,9 @@ In order to get a listing of scene IDs, run the same command for `scenes`.
 ```
 lifx scenes --list
 ```
+
+### Setting colors
+
+Colors can be set by name, e.g. `red`, `yellow`, but the CLI also supports all methods to set the color that the API supports.
+
+In order to see a full list of supported methods run `lifx colors --list`. You can also validate a color's HSBK *(hue, saturation, brightness, and kelvin)* via `lifx colors --color red`.
