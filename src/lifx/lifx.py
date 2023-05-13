@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 import argparse
-from auth import Auth
-from colors import Colors
-from devices import Devices
-from lights import Lights
-from scenes import Scenes
+from src.lifx.auth import Auth
+from src.lifx.colors import Colors
+from src.lifx.devices import Devices
+from src.lifx.lights import Lights
+from src.lifx.scenes import Scenes
 
 auth = Auth()
 colors = Colors()

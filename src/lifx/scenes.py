@@ -3,7 +3,7 @@
 class Scenes:
 
     def __init__(self):
-        from auth import Auth
+        from src.lifx.auth import Auth
 
         self.auth = Auth()
         self.auth_headers = self.auth.auth()

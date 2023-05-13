@@ -12,7 +12,7 @@ COLOR_TABLE = [['[name]', 'white, red, orange, yellow, cyan, green, blue, purple
 
 class Colors:
     def __init__(self):
-        from auth import Auth
+        from src.lifx.auth import Auth
 
         self.auth = Auth()
         self.auth_headers = self.auth.auth()

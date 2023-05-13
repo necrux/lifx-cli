@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lifx-cli"
+version = "0.68.0"
+authors = [{name="Wes Henderson", email="info@necrux.com"}]
+description = "The Unofficial LIFX CLI"
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+  'requests',
+  'tabulate',
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/necrux/lifx-cli"
+"Bug Tracker" = "https://github.com/necrux/lifx-cli/issues"
+
+[project.scripts]
+lifx = 'src.lifx.lifx:main'
