@@ -1,7 +1,15 @@
 # The Unofficial LIFX CLI
+
 Playing around with the LifX API with the goal of creating a feature-rich CLI.
 
+## Installation
+
+```
+pip3 install lifx-cli
+```
+
 ## Authentication
+
 Authentication is done using your token stored in `~/.keys`. This can be configured manually or by running `lifx --configure`.
 
 **Example `~/.keys` *ini* file:**
@@ -50,3 +58,4 @@ lifx scenes --list
 Colors can be set by name, e.g. `red`, `yellow`, but the CLI also supports all methods to set the color that the API supports.
 
 In order to see a full list of supported methods run `lifx colors --list`. You can also validate a color's HSBK *(hue, saturation, brightness, and kelvin)* via `lifx colors --color red`.
+
