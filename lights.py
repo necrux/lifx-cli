@@ -34,6 +34,17 @@ class Lights:
 
         put(f"https://api.lifx.com/v1/lights/{light_id}/state", data=payload, headers=self.auth_headers)
 
+    def list_effects(self):
+        """List effects currently supported by the CLI."""
+        from tabulate import tabulate
+
+        effects = [['Breathe', 'Performs a breathe effect by slowly fading between the given colors.'],
+                   ['Pulse', 'Performs a pulse effect by quickly flashing between the given colors. ']]
+
+        print(tabulate(effects, headers=["Name", "Description"]))
+        print("\nNote: The CLI can only control effects stored on your light's firmware.")
+        pass
+
     def breathe_effect(self, light_id, group, color):
         """Activates the breath effect on the specified light (period: 2; cycles: 10). Requires the device ID and
         color."""
