@@ -89,7 +89,7 @@ def colors_sub_command(args):
 def main():
     print(logo)
     # Create the parser
-    description = 'Control LIFX devices and settings via the CLI.'
+    description = 'Control LIFX devices via the CLI!'
     epilog = 'Run `lifx --configure` to setup authentication.'
     job_options = argparse.ArgumentParser(description=description, epilog=epilog)
 

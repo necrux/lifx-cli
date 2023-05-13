@@ -1,6 +1,8 @@
 # The Unofficial LIFX CLI
 
-Playing around with the LifX API with the goal of creating a feature-rich CLI.
+This is a work in progress to create a feature-rich LIFX CLI.
+
+**This project is not affiliated with or endorsed by LIFX.**
 
 ## Installation
 
