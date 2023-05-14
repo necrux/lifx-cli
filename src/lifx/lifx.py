@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-
+"""
+Author: Wes Henderson
+Control your lights with the unofficial LIFX CLI. This CLI uses the
+LIFX HTTP endpoints to configure your lights.
+https://api.developer.lifx.com/reference/introduction
+"""
 import argparse
 from src.lifx.auth import Auth
 from src.lifx.colors import Colors
@@ -13,7 +18,7 @@ device = Devices()
 light = Lights()
 scene = Scenes()
 
-logo = """
+LOGO = """
 ██      ██ ███████ ██   ██      ██████ ██      ██
 ██      ██ ██       ██ ██      ██      ██      ██
 ██      ██ █████     ███       ██      ██      ██
@@ -24,6 +29,7 @@ logo = """
 
 
 def lights_sub_command(args):
+    """Control the actions for the 'lights' sub-command."""
     devices = args.list_devices
     light_id = args.light_id
     toggle = args.toggle
@@ -46,6 +52,7 @@ def lights_sub_command(args):
 
 
 def scenes_sub_command(args):
+    """Control the actions for the 'scenes' sub-command."""
     scenes = args.list_scenes
     scene_id = args.scene_id
 
@@ -57,6 +64,7 @@ def scenes_sub_command(args):
 
 
 def effects_sub_command(args):
+    """Control the actions for the 'effects' sub-command."""
     list_effects = args.list_effects
     light_id = args.light_id
     group = args.group
@@ -76,6 +84,7 @@ def effects_sub_command(args):
 
 
 def colors_sub_command(args):
+    """Control the actions for the 'colors' sub-command."""
     list_colors = args.list_colors
     provided_color = args.colors
 
@@ -87,7 +96,8 @@ def colors_sub_command(args):
 
 
 def main():
-    print(logo)
+    """Main entrypoint for the LIFX CLI."""
+    print(LOGO)
     # Create the parser
     description = 'Control LIFX devices via the CLI!'
     epilog = 'Run `lifx --configure` to setup authentication.'
@@ -157,7 +167,7 @@ def main():
                                '--duration',
                                default=1,
                                action='store',
-                               help='State: How long the action will take (in seconds). [Default: 1]')
+                               help='State: How many seconds should the action take. [Default: 1]')
 
     # Add the 'scenes' sub-command.
     scene_command = light_job_options.add_parser('scenes', help='Scene specific functions.')
@@ -203,7 +213,7 @@ def main():
                                 '--color',
                                 default=[],
                                 action='append',
-                                help='Use the specified color. Use multiple -c options to alternate colors.')
+                                help='Specify the color; multiple -c options alternate colors.')
     effect_command.add_argument('--breathe',
                                 default=False,
                                 action='store_true',
@@ -241,7 +251,6 @@ def main():
     # Configure authentication.
     if configure:
         auth.configure()
-        exit(0)
 
     # The 'lights' sub-command.
     if args.command == 'lights':

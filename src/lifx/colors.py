@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
+"""Learn about how the CLI accepts color encoding."""
 
-COLOR_TABLE = [['[name]', 'white, red, orange, yellow, cyan, green, blue, purple, or pink', 'Sets hue and '
-                                                                                            'saturation only.'],
+import json
+from requests import get
+from tabulate import tabulate
+from src.lifx.auth import Auth
+
+COLOR_TABLE = [['[name]', 'white, red, orange, yellow, cyan, green, blue, purple, or pink',
+                'Sets hue and saturation only.'],
                ['hue:[0-360]', 'hue:120', 'Sets hue.'],
                ['saturation:[0.0-1.0]', 'saturation:0.5', 'Sets saturation.'],
                ['brightness:[0.0-1.0]', 'brightness:0.5', 'Sets brightness.'],
@@ -11,8 +17,8 @@ COLOR_TABLE = [['[name]', 'white, red, orange, yellow, cyan, green, blue, purple
 
 
 class Colors:
+    """Learn about how the CLI accepts color encoding."""
     def __init__(self):
-        from src.lifx.auth import Auth
 
         self.auth = Auth()
         self.auth_headers = self.auth.auth()
@@ -20,17 +26,14 @@ class Colors:
     @staticmethod
     def color_information():
         """Print color formatting information."""
-        from tabulate import tabulate
 
         print(tabulate(COLOR_TABLE, headers=["Format", "Example", "Notes"]))
 
     def validate_color(self, color):
         """Validate the provided color with the LIFX API."""
-        import json
-        from requests import get
-        from tabulate import tabulate
 
-        response = get(f'https://api.lifx.com/v1/color?string={color}', headers=self.auth_headers)
+        url = f'https://api.lifx.com/v1/color?string={color}'
+        response = get(url, headers=self.auth_headers, timeout=5)
         response = json.loads(response.content)
 
         hue = response['hue'] or 'None'
@@ -41,4 +44,3 @@ class Colors:
         validated_colors = [[hue, saturation, brightness, kelvin]]
 
         print(tabulate(validated_colors, headers=["Hue", "Saturation", "Brightness", "Kelvin"]))
-        pass

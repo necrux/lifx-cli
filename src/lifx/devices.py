@@ -1,25 +1,29 @@
 #!/usr/bin/env python3
+"""List LIFX devices"""
+
+import json
+from requests import get
+from tabulate import tabulate
+from src.lifx.auth import Auth
+
 
 class Devices:
+    """List LIFX devices."""
 
     def __init__(self):
-        from src.lifx.auth import Auth
-
         self.auth = Auth()
         self.auth_headers = self.auth.auth()
 
     def get(self):
         """Print a list of all LIFX devices on this account."""
-        import json
-        from requests import get
-        from tabulate import tabulate
 
-        response = get('https://api.lifx.com/v1/lights/all', headers=self.auth_headers)
+        url = 'https://api.lifx.com/v1/lights/all'
+        response = get(url, headers=self.auth_headers, timeout=5)
         response = json.loads(response.content)
 
         devices = []
 
-        for key in range(0, len(response)):
+        for key in enumerate(response):
             label = response[key]["label"]
             ident = response[key]["id"]
             power = response[key]["power"]

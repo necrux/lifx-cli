@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
+"""Configure and set authentication headers."""
+
+import sys
+import configparser
+from os import path, environ, getenv
 
 class Auth:
+    """Configure and set authentication headers."""
 
     def __init__(self):
-        from os import path
 
         self.auth_file = f'{path.expanduser("~")}/.keys'
         self.auth_file_section = 'lifx'
@@ -12,8 +17,6 @@ class Auth:
 
     def configure(self):
         """Configure/update the ini file for API authentication."""
-        import configparser
-        from os import path
 
         config = configparser.RawConfigParser()
         api_key = input('What is your API token?: ')
@@ -26,24 +29,23 @@ class Auth:
             config.add_section(self.auth_file_section)
             config.set(self.auth_file_section, self.auth_file_key, api_key)
 
-            with open(self.auth_file, 'a+') as f:
-                config.write(f)
+            with open(self.auth_file, 'a+', encoding='UTF-8') as file:
+                config.write(file)
         else:
-            overwrite = input('You already have an API key saved in ~/.keys. Do you want to overwrite this value? y/N ')
+            overwrite = input('You already have an API key saved in ~/.keys. '
+                              'Do you want to overwrite this value? y/N ')
             overwrite = overwrite.lower()
 
             if overwrite == 'y':
                 config.set(self.auth_file_section, self.auth_file_key, api_key)
 
-                with open(self.auth_file, 'w') as f:
-                    config.write(f)
+                with open(self.auth_file, 'w', encoding='UTF-8') as file:
+                    config.write(file)
 
-        return
+        sys.exit(0)
 
     def auth(self):
         """Returns the headers required to authenticate to the LIFX API."""
-        import configparser
-        from os import environ, getenv
 
         if environ.get(self.auth_env_var):
             token = getenv(self.auth_env_var)
