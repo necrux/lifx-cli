@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Learn about how the CLI accepts color encoding."""
-
 import json
 from requests import get
 from tabulate import tabulate
 from src.lifx.auth import Auth
+
+API = 'https://api.lifx.com/v1'
 
 COLOR_TABLE = [['[name]', 'white, red, orange, yellow, cyan, green, blue, purple, or pink',
                 'Sets hue and saturation only.'],
@@ -13,7 +14,7 @@ COLOR_TABLE = [['[name]', 'white, red, orange, yellow, cyan, green, blue, purple
                ['brightness:[0.0-1.0]', 'brightness:0.5', 'Sets brightness.'],
                ['kelvin:[1500-9000]', 'kelvin:5000', 'Sets kelvin to -c and saturation to 0.0.'],
                ['#RRGGBB', '#ff0000', 'Converts to HSBK.'],
-               ['rgb:[0-255],[0-255],[0-255]', 'rgb:255,255,0', '	Converts to HSBK.']]
+               ['rgb:[0-255],[0-255],[0-255]', 'rgb:255,255,0', 'Converts to HSBK.']]
 
 
 class Colors:
@@ -32,7 +33,7 @@ class Colors:
     def validate_color(self, color):
         """Validate the provided color with the LIFX API."""
 
-        url = f'https://api.lifx.com/v1/color?string={color}'
+        url = f'{API}/color?string={color}'
         response = get(url, headers=self.auth_headers, timeout=5)
         response = json.loads(response.content)
 

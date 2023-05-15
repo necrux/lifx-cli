@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Control LIFX lights and effects."""
-
 import json
 from requests import get, post, put
 from tabulate import tabulate
 from src.lifx.auth import Auth
+
+API = 'https://api.lifx.com/v1'
 
 
 class Lights:
@@ -17,7 +18,7 @@ class Lights:
     def get(self):
         """Print a list of all LIFX devices on this account."""
 
-        url = 'https://api.lifx.com/v1/lights/all'
+        url = f'{API}/lights/all'
         response = get(url, headers=self.auth_headers, timeout=5)
         response = json.loads(response.content)
         devices = []
@@ -41,7 +42,7 @@ class Lights:
         if group:
             light_id = f'group_id:{light_id}'
 
-        url = f"https://api.lifx.com/v1/lights/{light_id}/toggle"
+        url = f"{API}/lights/{light_id}/toggle"
         post(url, headers=self.auth_headers, timeout=5)
 
     def set_state(self, light_id, group, color, state_attributes):
@@ -58,5 +59,5 @@ class Lights:
         if group:
             light_id = f'group_id:{light_id}'
 
-        url = f"https://api.lifx.com/v1/lights/{light_id}/state"
+        url = f"{API}/lights/{light_id}/state"
         put(url, data=payload, headers=self.auth_headers, timeout=5)

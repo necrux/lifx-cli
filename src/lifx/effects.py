@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Control LIFX effects."""
-
 from requests import post
 from tabulate import tabulate
 from src.lifx.auth import Auth
+
+API = 'https://api.lifx.com/v1'
 
 
 class Effects:
@@ -42,7 +43,7 @@ class Effects:
         if group:
             light_id = f'group_id:{light_id}'
 
-        url = f"https://api.lifx.com/v1/lights/{light_id}/effects/breathe"
+        url = f"{API}/lights/{light_id}/effects/breathe"
         post(url, data=data, headers=self.auth_headers, timeout=5)
 
     def pulse_effect(self, light_id, group, color):
@@ -66,7 +67,7 @@ class Effects:
         if group:
             light_id = f'group_id:{light_id}'
 
-        url = f"https://api.lifx.com/v1/lights/{light_id}/effects/pulse"
+        url = f"{API}/lights/{light_id}/effects/pulse"
         post(url, data=data, headers=self.auth_headers, timeout=5)
 
     def stop_effect(self, light_id, group):
@@ -79,5 +80,5 @@ class Effects:
         if group:
             light_id = f'group_id:{light_id}'
 
-        url = f"https://api.lifx.com/v1/lights/{light_id}/effects/off"
+        url = f"{API}/lights/{light_id}/effects/off"
         post(url, data=data, headers=self.auth_headers, timeout=5)

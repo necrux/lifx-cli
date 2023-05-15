@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Configure and set authentication headers."""
-
 import sys
 import configparser
 from os import path, environ, getenv
