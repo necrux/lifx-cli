@@ -8,11 +8,13 @@ https://api.developer.lifx.com/reference/introduction
 import argparse
 from src.lifx.auth import Auth
 from src.lifx.colors import Colors
+from src.lifx.effects import Effects
 from src.lifx.lights import Lights
 from src.lifx.scenes import Scenes
 
 auth = Auth()
 colors = Colors()
+effects = Effects()
 light = Lights()
 scene = Scenes()
 
@@ -76,13 +78,13 @@ def effects_sub_command(args):
     stop = args.stop
 
     if list_effects:
-        light.list_effects()
+        effects.list_effects()
     if breathe:
-        light.breathe_effect(light_id, group, color)
+        effects.breathe_effect(light_id, group, color)
     elif pulse:
-        light.pulse_effect(light_id, group, color)
+        effects.pulse_effect(light_id, group, color)
     elif stop:
-        light.stop_effect(light_id, group)
+        effects.stop_effect(light_id, group)
 
 
 def colors_sub_command(args):
