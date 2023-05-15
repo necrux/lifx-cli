@@ -8,13 +8,11 @@ https://api.developer.lifx.com/reference/introduction
 import argparse
 from src.lifx.auth import Auth
 from src.lifx.colors import Colors
-from src.lifx.devices import Devices
 from src.lifx.lights import Lights
 from src.lifx.scenes import Scenes
 
 auth = Auth()
 colors = Colors()
-device = Devices()
 light = Lights()
 scene = Scenes()
 
@@ -42,7 +40,7 @@ def lights_sub_command(args):
     duration = args.duration
 
     if devices:
-        device.get()
+        light.get()
 
     if toggle:
         light.toggle(light_id, group)

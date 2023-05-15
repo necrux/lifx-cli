@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Control LIFX lights and effects."""
 
-from requests import post, put
+import json
+from requests import get, post, put
 from tabulate import tabulate
 from src.lifx.auth import Auth
 
@@ -12,6 +13,28 @@ class Lights:
     def __init__(self):
         self.auth = Auth()
         self.auth_headers = self.auth.auth()
+
+    def get(self):
+        """Print a list of all LIFX devices on this account."""
+
+        url = 'https://api.lifx.com/v1/lights/all'
+        response = get(url, headers=self.auth_headers, timeout=5)
+        response = json.loads(response.content)
+
+        devices = []
+
+        for key in range(0, len(response)):
+            label = response[key]["label"]
+            ident = response[key]["id"]
+            power = response[key]["power"]
+            connected = response[key]["connected"]
+            group = response[key]["group"]["name"]
+            group_id = response[key]["group"]["id"]
+
+            devices += [[label, ident, power, connected, group, group_id]]
+
+        devices.sort()
+        print(tabulate(devices, headers=["Name", "ID", "State", "Connected", "Group", "Group ID"]))
 
     def toggle(self, light_id, group):
         """Toggles the power for the specified light. Requires the device ID."""
