@@ -5,6 +5,7 @@ import sys
 import configparser
 from os import path, environ, getenv
 
+
 class Auth:
     """Configure and set authentication headers."""
 
