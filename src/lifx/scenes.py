@@ -23,7 +23,7 @@ class Scenes:
 
         scenes = []
 
-        for key in enumerate(response):
+        for key in range(len(response)):
             scenes += [[response[key]["name"], response[key]["uuid"]]]
 
         scenes.sort()

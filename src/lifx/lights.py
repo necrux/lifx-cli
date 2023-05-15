@@ -20,10 +20,9 @@ class Lights:
         url = 'https://api.lifx.com/v1/lights/all'
         response = get(url, headers=self.auth_headers, timeout=5)
         response = json.loads(response.content)
-
         devices = []
 
-        for key in range(0, len(response)):
+        for key in range(len(response)):
             label = response[key]["label"]
             ident = response[key]["id"]
             power = response[key]["power"]
