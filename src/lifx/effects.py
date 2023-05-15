@@ -12,7 +12,8 @@ class Effects:
         self.auth = Auth()
         self.auth_headers = self.auth.auth()
 
-    def list_effects(self):
+    @staticmethod
+    def list_effects():
         """List effects currently supported by the CLI."""
         effects = [['Breathe',
                     'Performs a breathe effect by slowly fading between the given colors.'],
