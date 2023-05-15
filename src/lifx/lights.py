@@ -45,15 +45,15 @@ class Lights:
         url = f"https://api.lifx.com/v1/lights/{light_id}/toggle"
         post(url, headers=self.auth_headers, timeout=5)
 
-    def set_state(self, light_id, group, color, power, brightness, duration, infrared):
+    def set_state(self, light_id, group, color, state_attributes):
         """Changes the state for the specified light. Requires the device ID."""
 
         payload = {
-            "power": f"{power}",
+            "power": f"{state_attributes['power']}",
             "color": f"{color}",
-            "brightness": f"{brightness}",
-            "duration": f"{duration}",
-            "infrared": f"{infrared}",
+            "brightness": f"{state_attributes['brightness']}",
+            "duration": f"{state_attributes['duration']}",
+            "infrared": f"{state_attributes['infrared']}",
         }
 
         if group:

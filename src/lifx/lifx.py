@@ -46,7 +46,11 @@ def lights_sub_command(args):
         light.toggle(light_id, group)
 
     if state:
-        light.set_state(light_id, group, color, power, brightness, duration, infrared)
+        state_attributes = {'power': power,
+                            'brightness': brightness,
+                            'duration': duration,
+                            'infrared': infrared}
+        light.set_state(light_id, group, color, state_attributes)
 
 
 def scenes_sub_command(args):
