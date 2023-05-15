@@ -5,6 +5,11 @@ from tabulate import tabulate
 from src.lifx.auth import Auth
 
 API = 'https://api.lifx.com/v1'
+EFFECTS = [['Breathe',
+            'Performs a breathe effect by slowly fading between the given colors.'],
+           ['Pulse',
+            'Performs a pulse effect by quickly flashing between the given colors. ']]
+EFFECTS_NOTICE = "Note: The CLI can only control effects stored on your light's firmware."
 
 
 class Effects:
@@ -15,13 +20,8 @@ class Effects:
     @staticmethod
     def list_effects():
         """List effects currently supported by the CLI."""
-        effects = [['Breathe',
-                    'Performs a breathe effect by slowly fading between the given colors.'],
-                   ['Pulse',
-                    'Performs a pulse effect by quickly flashing between the given colors. ']]
-
-        print(tabulate(effects, headers=["Name", "Description"]))
-        print("\nNote: The CLI can only control effects stored on your light's firmware.")
+        print(tabulate(EFFECTS, headers=["Name", "Description"]))
+        print(f"\n{EFFECTS_NOTICE}")
 
     def breathe_effect(self, light_id, group, color):
         """Activates the breath effect (period: 2; cycles: 10).
