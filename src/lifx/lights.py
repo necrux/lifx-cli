@@ -4,7 +4,7 @@
 import json
 from requests import get, post, put
 from tabulate import tabulate
-from auth import Auth
+from src.lifx.auth import Auth
 
 
 class Lights:

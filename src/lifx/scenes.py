@@ -4,7 +4,7 @@
 import json
 from requests import get, put
 from tabulate import tabulate
-from auth import Auth
+from src.lifx.auth import Auth
 
 
 class Scenes:

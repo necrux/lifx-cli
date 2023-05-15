@@ -4,7 +4,7 @@
 import json
 from requests import get
 from tabulate import tabulate
-from auth import Auth
+from src.lifx.auth import Auth
 
 COLOR_TABLE = [['[name]', 'white, red, orange, yellow, cyan, green, blue, purple, or pink',
                 'Sets hue and saturation only.'],
