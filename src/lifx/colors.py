@@ -44,3 +44,4 @@ class Colors:
         validated_colors = [[hue, saturation, brightness, kelvin]]
 
         print(tabulate(validated_colors, headers=["Hue", "Saturation", "Brightness", "Kelvin"]))
+
