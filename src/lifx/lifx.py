@@ -6,10 +6,10 @@ LIFX HTTP endpoints to configure your lights.
 https://api.developer.lifx.com/reference/introduction
 """
 import argparse
-from src.lifx.auth import Auth
-from src.lifx.colors import Colors
-from src.lifx.lights import Lights
-from src.lifx.scenes import Scenes
+from auth import Auth
+from colors import Colors
+from lights import Lights
+from scenes import Scenes
 
 auth = Auth()
 colors = Colors()
