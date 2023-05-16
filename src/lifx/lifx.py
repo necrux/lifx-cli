@@ -28,18 +28,30 @@ LOGO = """
 """
 
 
-def lights_sub_command(args):
+def lights_sub_command(args=None):
     """Control the actions for the 'lights' sub-command."""
-    devices = args.list_devices
-    light_id = args.light_id
-    toggle = args.toggle
-    group = args.group
-    state = args.state
-    color = args.color
-    power = args.power
-    brightness = args.brightness
-    infrared = args.infrared
-    duration = args.duration
+    if args is None:
+        devices = True
+        light_id = False
+        toggle = False
+        group = False
+        state = False
+        color = False
+        power = False
+        brightness = False
+        infrared = False
+        duration = False
+    else:
+        devices = args.list_devices
+        light_id = args.light_id
+        toggle = args.toggle
+        group = args.group
+        state = args.state
+        color = args.color
+        power = args.power
+        brightness = args.brightness
+        infrared = args.infrared
+        duration = args.duration
 
     if devices:
         light.get()
@@ -55,10 +67,14 @@ def lights_sub_command(args):
         light.set_state(light_id, group, color, state_attributes)
 
 
-def scenes_sub_command(args):
+def scenes_sub_command(args=None):
     """Control the actions for the 'scenes' sub-command."""
-    scenes = args.list_scenes
-    scene_id = args.scene_id
+    if args is None:
+        scenes = True
+        scene_id = False
+    else:
+        scenes = args.list_scenes
+        scene_id = args.scene_id
 
     if scenes:
         scene.get()
@@ -67,15 +83,24 @@ def scenes_sub_command(args):
         scene.activate(scene_id)
 
 
-def effects_sub_command(args):
+def effects_sub_command(args=None):
     """Control the actions for the 'effects' sub-command."""
-    list_effects = args.list_effects
-    light_id = args.light_id
-    group = args.group
-    color = args.color
-    breathe = args.breathe
-    pulse = args.pulse
-    stop = args.stop
+    if args is None:
+        list_effects = False
+        light_id = '917e85258fa3c3fe15816a04db6a9a15'
+        group = True
+        color = 'purple'
+        breathe = True
+        pulse = False
+        stop = False
+    else:
+        list_effects = args.list_effects
+        light_id = args.light_id
+        group = args.group
+        color = args.color
+        breathe = args.breathe
+        pulse = args.pulse
+        stop = args.stop
 
     if list_effects:
         effects.list_effects()
@@ -87,10 +112,14 @@ def effects_sub_command(args):
         effects.stop_effect(light_id, group)
 
 
-def colors_sub_command(args):
+def colors_sub_command(args=None):
     """Control the actions for the 'colors' sub-command."""
-    list_colors = args.list_colors
-    provided_color = args.colors
+    if args is None:
+        list_colors = False
+        provided_color = 'red'
+    else:
+        list_colors = args.list_colors
+        provided_color = args.colors
 
     if list_colors:
         colors.color_information()
