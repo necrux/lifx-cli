@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Learn about how the CLI accepts color encoding."""
 import json
+import sys
+
 from requests import get
 from tabulate import tabulate
 from src.lifx.auth import Auth
@@ -35,6 +37,9 @@ class Colors:
 
         url = f'{API}/color?string={color}'
         response = get(url, headers=self.auth_headers, timeout=5)
+        if response.status_code != 200:
+            print(f"HTTP request failed. State code: {response.status_code}")
+            sys.exit(10)
         response = json.loads(response.content)
 
         hue = response['hue'] or 'None'

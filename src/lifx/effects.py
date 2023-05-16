@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Control LIFX effects."""
+import sys
 from requests import post
 from tabulate import tabulate
 from src.lifx.auth import Auth
@@ -45,7 +46,11 @@ class Effects:
             light_id = f'group_id:{light_id}'
 
         url = f"{API}/lights/{light_id}/effects/breathe"
-        post(url, data=data, headers=self.auth_headers, timeout=5)
+        response = post(url, data=data, headers=self.auth_headers, timeout=5)
+
+        if response.status_code != 207:
+            print(f"HTTP request failed. State code: {response.status_code}")
+            sys.exit(20)
 
     def pulse_effect(self, light_id, group, color):
         """Activates the pulse effect (period: 2; cycles: 10).
@@ -69,7 +74,11 @@ class Effects:
             light_id = f'group_id:{light_id}'
 
         url = f"{API}/lights/{light_id}/effects/pulse"
-        post(url, data=data, headers=self.auth_headers, timeout=5)
+        response = post(url, data=data, headers=self.auth_headers, timeout=5)
+
+        if response.status_code != 207:
+            print(f"HTTP request failed. State code: {response.status_code}")
+            sys.exit(21)
 
     def stop_effect(self, light_id, group):
         """Stop all effects on the specified light. Requires Light ID."""
@@ -82,4 +91,8 @@ class Effects:
             light_id = f'group_id:{light_id}'
 
         url = f"{API}/lights/{light_id}/effects/off"
-        post(url, data=data, headers=self.auth_headers, timeout=5)
+        response = post(url, data=data, headers=self.auth_headers, timeout=5)
+
+        if response.status_code != 207:
+            print(f"HTTP request failed. State code: {response.status_code}")
+            sys.exit(22)

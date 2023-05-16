@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Control LIFX lights and effects."""
+import sys
 import json
 from requests import get, post, put
 from tabulate import tabulate
@@ -20,7 +21,13 @@ class Lights:
 
         url = f'{API}/lights/all'
         response = get(url, headers=self.auth_headers, timeout=5)
+
+        if response.status_code != 200:
+            print(f"HTTP request failed. State code: {response.status_code}")
+            sys.exit(30)
+
         response = json.loads(response.content)
+
         devices = []
 
         for key in range(len(response)):
@@ -43,7 +50,11 @@ class Lights:
             light_id = f'group_id:{light_id}'
 
         url = f"{API}/lights/{light_id}/toggle"
-        post(url, headers=self.auth_headers, timeout=5)
+        response = post(url, headers=self.auth_headers, timeout=5)
+
+        if response.status_code != 207:
+            print(f"HTTP request failed. State code: {response.status_code}")
+            sys.exit(31)
 
     def set_state(self, light_id, group, color, state_attributes):
         """Changes the state for the specified light. Requires the device ID."""
@@ -60,4 +71,8 @@ class Lights:
             light_id = f'group_id:{light_id}'
 
         url = f"{API}/lights/{light_id}/state"
-        put(url, data=payload, headers=self.auth_headers, timeout=5)
+        response = put(url, data=payload, headers=self.auth_headers, timeout=5)
+
+        if response.status_code != 207:
+            print(f"HTTP request failed. State code: {response.status_code}")
+            sys.exit(32)

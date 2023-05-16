@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """List and control LIFX scenes."""
+import sys
 import json
 from requests import get, put
 from tabulate import tabulate
@@ -20,6 +21,11 @@ class Scenes:
 
         url = f'{API}/scenes'
         response = get(url, headers=self.auth_headers, timeout=5)
+
+        if response.status_code != 200:
+            print(f"HTTP request failed. State code: {response.status_code}")
+            sys.exit(40)
+
         response = json.loads(response.content)
 
         scenes = []
@@ -34,4 +40,8 @@ class Scenes:
         """Activates the specified scene. Requires scene UUID."""
 
         url = f'{API}/scenes/scene_id:{scene_id}/activate'
-        put(url, headers=self.auth_headers, timeout=5)
+        response = put(url, headers=self.auth_headers, timeout=5)
+
+        if response.status_code != 207:
+            print(f"HTTP request failed. State code: {response.status_code}")
+            sys.exit(41)
