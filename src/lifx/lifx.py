@@ -13,10 +13,6 @@ from src.lifx.lights import Lights
 from src.lifx.scenes import Scenes
 
 auth = Auth()
-colors = Colors()
-effects = Effects()
-light = Lights()
-scene = Scenes()
 
 LOGO = """
 ██      ██ ███████ ██   ██      ██████ ██      ██
@@ -30,6 +26,8 @@ LOGO = """
 
 def lights_sub_command(args=None):
     """Control the actions for the 'lights' sub-command."""
+    light = Lights()
+
     if isinstance(args, list):
         devices = args[0]
         light_id = args[1]
@@ -69,6 +67,8 @@ def lights_sub_command(args=None):
 
 def scenes_sub_command(args=None):
     """Control the actions for the 'scenes' sub-command."""
+    scene = Scenes()
+
     if isinstance(args, list):
         scenes = args[0]
         scene_id = args[1]
@@ -85,6 +85,8 @@ def scenes_sub_command(args=None):
 
 def effects_sub_command(args=None):
     """Control the actions for the 'effects' sub-command."""
+    effects = Effects()
+
     if isinstance(args, list):
         list_effects = args[0]
         light_id = args[1]
@@ -114,6 +116,8 @@ def effects_sub_command(args=None):
 
 def colors_sub_command(args):
     """Control the actions for the 'colors' sub-command."""
+    colors = Colors()
+
     if isinstance(args, list):
         list_colors = args[0]
         provided_color = args[1]
@@ -279,10 +283,9 @@ def main():
                                help='Validate a color using the LIFX API.')
 
     args = job_options.parse_args()
-    configure = args.configure
 
     # Configure authentication.
-    if configure:
+    if args.configure:
         auth.configure()
 
     # The 'lights' sub-command.

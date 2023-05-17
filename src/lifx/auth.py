@@ -47,13 +47,17 @@ class Auth:
     def auth(self):
         """Returns the headers required to authenticate to the LIFX API."""
 
-        if environ.get(self.auth_env_var):
-            token = getenv(self.auth_env_var)
-        else:
-            config = configparser.ConfigParser()
-            config.read(self.auth_file)
+        try:
+            if environ.get(self.auth_env_var):
+                token = getenv(self.auth_env_var)
+            else:
+                config = configparser.ConfigParser()
+                config.read(self.auth_file)
 
-            token = config[self.auth_file_section][self.auth_file_key]
+                token = config[self.auth_file_section][self.auth_file_key]
+        except KeyError:
+            print("Must configure an API token first.")
+            self.configure()
 
         headers = {
             'Authorization': f'Bearer {token}',
