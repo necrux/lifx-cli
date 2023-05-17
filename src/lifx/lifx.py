@@ -30,17 +30,17 @@ LOGO = """
 
 def lights_sub_command(args=None):
     """Control the actions for the 'lights' sub-command."""
-    if args is None:
-        devices = True
-        light_id = False
-        toggle = False
-        group = False
-        state = False
-        color = False
-        power = False
-        brightness = False
-        infrared = False
-        duration = False
+    if isinstance(args, list):
+        devices = args[0]
+        light_id = args[1]
+        toggle = args[2]
+        group = args[3]
+        state = args[4]
+        color = args[5]
+        power = args[6]
+        brightness = args[7]
+        infrared = args[8]
+        duration = args[9]
     else:
         devices = args.list_devices
         light_id = args.light_id
@@ -69,9 +69,9 @@ def lights_sub_command(args=None):
 
 def scenes_sub_command(args=None):
     """Control the actions for the 'scenes' sub-command."""
-    if args is None:
-        scenes = True
-        scene_id = False
+    if isinstance(args, list):
+        scenes = args[0]
+        scene_id = args[1]
     else:
         scenes = args.list_scenes
         scene_id = args.scene_id
@@ -85,14 +85,14 @@ def scenes_sub_command(args=None):
 
 def effects_sub_command(args=None):
     """Control the actions for the 'effects' sub-command."""
-    if args is None:
-        list_effects = False
-        light_id = '917e85258fa3c3fe15816a04db6a9a15'
-        group = True
-        color = ['purple']
-        breathe = True
-        pulse = False
-        stop = False
+    if isinstance(args, list):
+        list_effects = args[0]
+        light_id = args[1]
+        group = args[2]
+        color = args[3]
+        breathe = args[4]
+        pulse = args[5]
+        stop = args[6]
     else:
         list_effects = args.list_effects
         light_id = args.light_id
@@ -112,11 +112,11 @@ def effects_sub_command(args=None):
         effects.stop_effect(light_id, group)
 
 
-def colors_sub_command(args=None):
+def colors_sub_command(args):
     """Control the actions for the 'colors' sub-command."""
-    if args is None:
-        list_colors = False
-        provided_color = 'red'
+    if isinstance(args, list):
+        list_colors = args[0]
+        provided_color = args[1]
     else:
         list_colors = args.list_colors
         provided_color = args.colors
