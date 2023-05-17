@@ -45,3 +45,5 @@ class Scenes:
         if response.status_code != 207:
             print(f"HTTP request failed. State code: {response.status_code}")
             sys.exit(41)
+        else:
+            sys.exit(0)

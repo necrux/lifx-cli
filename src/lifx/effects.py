@@ -51,6 +51,8 @@ class Effects:
         if response.status_code != 207:
             print(f"HTTP request failed. State code: {response.status_code}")
             sys.exit(20)
+        else:
+            sys.exit(0)
 
     def pulse_effect(self, light_id, group, color):
         """Activates the pulse effect (period: 2; cycles: 10).
@@ -79,6 +81,8 @@ class Effects:
         if response.status_code != 207:
             print(f"HTTP request failed. State code: {response.status_code}")
             sys.exit(21)
+        else:
+            sys.exit(0)
 
     def stop_effect(self, light_id, group):
         """Stop all effects on the specified light. Requires Light ID."""
@@ -96,3 +100,5 @@ class Effects:
         if response.status_code != 207:
             print(f"HTTP request failed. State code: {response.status_code}")
             sys.exit(22)
+        else:
+            sys.exit(0)

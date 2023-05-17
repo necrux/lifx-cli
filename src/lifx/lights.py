@@ -55,6 +55,8 @@ class Lights:
         if response.status_code != 207:
             print(f"HTTP request failed. State code: {response.status_code}")
             sys.exit(31)
+        else:
+            sys.exit(0)
 
     def set_state(self, light_id, group, color, state_attributes):
         """Changes the state for the specified light. Requires the device ID."""
@@ -76,3 +78,5 @@ class Lights:
         if response.status_code != 207:
             print(f"HTTP request failed. State code: {response.status_code}")
             sys.exit(32)
+        else:
+            sys.exit(0)
