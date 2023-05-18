@@ -30,8 +30,8 @@ class Scenes:
 
         scenes = []
 
-        for count, value in enumerate(response):
-            scenes += [[response[count]["name"], response[count]["uuid"]]]
+        for _, value in enumerate(response):
+            scenes += [[value["name"], value["uuid"]]]
 
         scenes.sort()
         print(tabulate(scenes, headers=["Name", "ID"]))
