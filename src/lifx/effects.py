@@ -14,6 +14,7 @@ EFFECTS_NOTICE = "Note: The CLI can only control effects stored on your light's 
 
 
 class Effects:
+    """Control LIFX effects."""
     def __init__(self):
         self.auth = Auth()
         self.auth_headers = self.auth.auth()
