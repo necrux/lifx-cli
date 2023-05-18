@@ -30,13 +30,13 @@ class Lights:
 
         devices = []
 
-        for key in range(len(response)):
-            label = response[key]["label"]
-            ident = response[key]["id"]
-            power = response[key]["power"]
-            connected = response[key]["connected"]
-            group = response[key]["group"]["name"]
-            group_id = response[key]["group"]["id"]
+        for count, value in enumerate(response):
+            label = response[count]["label"]
+            ident = response[count]["id"]
+            power = response[count]["power"]
+            connected = response[count]["connected"]
+            group = response[count]["group"]["name"]
+            group_id = response[count]["group"]["id"]
 
             devices += [[label, ident, power, connected, group, group_id]]
 
