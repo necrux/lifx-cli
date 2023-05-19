@@ -7,14 +7,11 @@ https://api.developer.lifx.com/reference/introduction
 """
 import argparse
 import sys
-
 from src.lifx.auth import Auth
 from src.lifx.colors import Colors
 from src.lifx.effects import Effects
 from src.lifx.lights import Lights
 from src.lifx.scenes import Scenes
-
-auth = Auth()
 
 LOGO = """
 ██      ██ ███████ ██   ██      ██████ ██      ██
@@ -24,6 +21,58 @@ LOGO = """
 ███████ ██ ██      ██   ██      ██████ ███████ ██
 
 """
+
+
+def colors_sub_command(args):
+    """Control the actions for the 'colors' sub-command."""
+    colors = Colors()
+
+    if isinstance(args, list):
+        list_colors = args[0]
+        provided_color = args[1]
+    else:
+        list_colors = args.list_colors
+        provided_color = args.colors
+
+    if list_colors:
+        colors.color_information()
+
+    if provided_color:
+        colors.validate_color(provided_color)
+
+
+def effects_sub_command(args=None):
+    """Control the actions for the 'effects' sub-command."""
+    effects = Effects()
+
+    if isinstance(args, list):
+        list_effects = args[0]
+        light_id = args[1]
+        group = args[2]
+        color = args[3]
+        breathe = args[4]
+        pulse = args[5]
+        stop = args[6]
+    else:
+        list_effects = args.list_effects
+        light_id = args.light_id
+        group = args.group
+        color = args.color
+        breathe = args.breathe
+        pulse = args.pulse
+        stop = args.stop
+
+    if list_effects:
+        effects.list_effects()
+    elif not light_id:
+        print("Must specify a light/group ID.")
+        sys.exit(4)
+    if breathe:
+        effects.breathe_effect(light_id, group, color)
+    elif pulse:
+        effects.pulse_effect(light_id, group, color)
+    elif stop:
+        effects.stop_effect(light_id, group)
 
 
 def lights_sub_command(args=None):
@@ -95,60 +144,9 @@ def scenes_sub_command(args=None):
         scene.activate(scene_id)
 
 
-def effects_sub_command(args=None):
-    """Control the actions for the 'effects' sub-command."""
-    effects = Effects()
-
-    if isinstance(args, list):
-        list_effects = args[0]
-        light_id = args[1]
-        group = args[2]
-        color = args[3]
-        breathe = args[4]
-        pulse = args[5]
-        stop = args[6]
-    else:
-        list_effects = args.list_effects
-        light_id = args.light_id
-        group = args.group
-        color = args.color
-        breathe = args.breathe
-        pulse = args.pulse
-        stop = args.stop
-
-    if list_effects:
-        effects.list_effects()
-    elif not light_id:
-        print("Must specify a light/group ID.")
-        sys.exit(4)
-    if breathe:
-        effects.breathe_effect(light_id, group, color)
-    elif pulse:
-        effects.pulse_effect(light_id, group, color)
-    elif stop:
-        effects.stop_effect(light_id, group)
-
-
-def colors_sub_command(args):
-    """Control the actions for the 'colors' sub-command."""
-    colors = Colors()
-
-    if isinstance(args, list):
-        list_colors = args[0]
-        provided_color = args[1]
-    else:
-        list_colors = args.list_colors
-        provided_color = args.colors
-
-    if list_colors:
-        colors.color_information()
-
-    if provided_color:
-        colors.validate_color(provided_color)
-
-
 def main():
     """Main entrypoint for the LIFX CLI."""
+    auth = Auth()
     print(LOGO)
     # Create the parser
     description = 'Control LIFX devices via the CLI!'
@@ -309,6 +307,14 @@ def main():
     if args.configure:
         auth.configure()
 
+    # The 'colors' sub-command.
+    if args.command == 'colors':
+        colors_sub_command(args)
+
+    # The 'effects' sub-command.
+    if args.command == 'effects':
+        effects_sub_command(args)
+
     # The 'lights' sub-command.
     if args.command == 'lights':
         lights_sub_command(args)
@@ -316,14 +322,6 @@ def main():
     # The 'scenes' sub-command.
     if args.command == 'scenes':
         scenes_sub_command(args)
-
-    # The 'effects' sub-command.
-    if args.command == 'effects':
-        effects_sub_command(args)
-
-    # The 'colors' sub-command.
-    if args.command == 'colors':
-        colors_sub_command(args)
 
 
 if __name__ == '__main__':
