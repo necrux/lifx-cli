@@ -7,7 +7,7 @@ This is a work in progress to create a feature-rich LIFX CLI.
 ## Installation
 
 ```
-pip3 install lifx-cli
+pip install lifx-cli
 ```
 
 ## Authentication
