@@ -14,7 +14,7 @@ def test_colors(capsys):
 
 
 def test_effects():
-    """Test the effects sub-command (lights will flash purple as Wes' home."""
+    """Test the effects sub-command (lights will flash purple as Wes' home)."""
     cli_args = [False, '917e85258fa3c3fe15816a04db6a9a15', True, ['purple'], True, False, False]
     with pytest.raises(SystemExit) as pytest_wrapped_e:
         src.lifx.lifx.effects_sub_command(cli_args)
