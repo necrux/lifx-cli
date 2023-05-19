@@ -6,6 +6,8 @@ LIFX HTTP endpoints to configure your lights.
 https://api.developer.lifx.com/reference/introduction
 """
 import argparse
+import sys
+
 from src.lifx.auth import Auth
 from src.lifx.colors import Colors
 from src.lifx.effects import Effects
@@ -54,6 +56,9 @@ def lights_sub_command(args=None):
 
     if devices:
         light.get()
+    elif not light_id:
+        print("Must specify a light/group ID.")
+        sys.exit(2)
 
     if toggle:
         light.toggle(light_id, group)
@@ -82,6 +87,9 @@ def scenes_sub_command(args=None):
 
     if scenes:
         scene.get()
+    elif not scene_id:
+        print("Must specify a scene ID.")
+        sys.exit(3)
 
     if scene_id:
         scene.activate(scene_id)
@@ -110,6 +118,9 @@ def effects_sub_command(args=None):
 
     if list_effects:
         effects.list_effects()
+    elif not light_id:
+        print("Must specify a light/group ID.")
+        sys.exit(4)
     if breathe:
         effects.breathe_effect(light_id, group, color)
     elif pulse:
