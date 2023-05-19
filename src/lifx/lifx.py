@@ -41,7 +41,7 @@ def colors_sub_command(args):
         colors.validate_color(provided_color)
 
 
-def effects_sub_command(args=None):
+def effects_sub_command(args):
     """Control the actions for the 'effects' sub-command."""
     effects = Effects()
 
@@ -75,7 +75,7 @@ def effects_sub_command(args=None):
         effects.stop_effect(light_id, group)
 
 
-def lights_sub_command(args=None):
+def lights_sub_command(args):
     """Control the actions for the 'lights' sub-command."""
     light = Lights()
 
@@ -124,7 +124,7 @@ def lights_sub_command(args=None):
         light.set_state(light_id, group, color, state_attributes)
 
 
-def scenes_sub_command(args=None):
+def scenes_sub_command(args):
     """Control the actions for the 'scenes' sub-command."""
     scene = Scenes()
 
