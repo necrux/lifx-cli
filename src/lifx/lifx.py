@@ -84,18 +84,19 @@ def lights_sub_command(args=None):
         light_id = args[1]
         toggle = args[2]
         group = args[3]
-        state = args[4]
-        color = args[5]
-        power = args[6]
-        brightness = args[7]
-        infrared = args[8]
-        duration = args[9]
+        clean_duration = args[4]
+        state = args[5]
+        color = args[6]
+        power = args[7]
+        brightness = args[8]
+        infrared = args[9]
+        duration = args[10]
     else:
         devices = args.list_devices
         light_id = args.light_id
         toggle = args.toggle
         group = args.group
-        clean = args.clean
+        clean_duration = args.clean_duration
         state = args.state
         color = args.color
         power = args.power
@@ -112,8 +113,8 @@ def lights_sub_command(args=None):
     if toggle:
         light.toggle(light_id, group)
 
-    if clean:
-        light.clean(light_id, group, clean)
+    if clean_duration:
+        light.clean(light_id, group, clean_duration)
 
     if state:
         state_attributes = {'power': power,
@@ -196,7 +197,7 @@ def main():
     light_command.add_argument('-n',
                                '--clean',
                                default=False,
-                               dest='clean',
+                               dest='clean_duration',
                                action='store',
                                help='Turn on Clean mode for N seconds.')
     light_command.add_argument('-c',

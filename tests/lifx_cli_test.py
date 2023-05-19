@@ -24,7 +24,7 @@ def test_effects():
 
 def test_lights(capsys):
     """Test the lights sub-command."""
-    cli_args = [True, False, False, False, False, False, False, False, False, False]
+    cli_args = [True, False, False, False, False, False, False, False, False, False, False]
     src.lifx.lifx.lights_sub_command(cli_args)
     out, err = capsys.readouterr()
     assert "d073d568d053" in out
