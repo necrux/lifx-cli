@@ -44,6 +44,7 @@ def lights_sub_command(args=None):
         light_id = args.light_id
         toggle = args.toggle
         group = args.group
+        clean = args.clean
         state = args.state
         color = args.color
         power = args.power
@@ -56,6 +57,9 @@ def lights_sub_command(args=None):
 
     if toggle:
         light.toggle(light_id, group)
+
+    if clean:
+        light.clean(light_id, group, clean)
 
     if state:
         state_attributes = {'power': power,
@@ -180,6 +184,12 @@ def main():
                                default=False,
                                action='store_true',
                                help='Set the state for the specified light.')
+    light_command.add_argument('-n',
+                               '--clean',
+                               default=False,
+                               dest='clean',
+                               action='store',
+                               help='Turn on Clean mode for N seconds.')
     light_command.add_argument('-c',
                                '--color',
                                default='green',
@@ -250,7 +260,7 @@ def main():
                                 '--color',
                                 default=[],
                                 action='append',
-                                help='Specify the color; multiple -c options alternate colors.')
+                                help='Set the color; add multiple -c options to alternate colors.')
     effect_command.add_argument('--breathe',
                                 default=False,
                                 action='store_true',

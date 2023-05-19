@@ -80,3 +80,23 @@ class Lights:
             sys.exit(32)
         else:
             sys.exit(0)
+
+    def clean(self, light_id, group, duration):
+        """Switches a light to clean mode. Requires the device ID."""
+
+        if group:
+            light_id = f'group_id:{light_id}'
+
+        payload = {
+            "stop": "False",
+            "duration": f"{duration}",
+        }
+
+        url = f"{API}/lights/{light_id}/clean"
+        response = post(url, data=payload, headers=self.auth_headers, timeout=5)
+
+        if response.status_code != 207:
+            print(f"HTTP request failed. State code: {response.status_code}")
+            sys.exit(33)
+        else:
+            sys.exit(0)
