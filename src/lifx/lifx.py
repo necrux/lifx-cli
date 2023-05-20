@@ -21,6 +21,7 @@ LOGO = """
 ███████ ██ ██      ██   ██      ██████ ███████ ██
 
 """
+VERSION = "2.5.1"
 
 
 def colors_sub_command(args):
@@ -160,6 +161,11 @@ def main():
                              default=False,
                              action='store_true',
                              help='Add your LIFX token to the local authentication file: ~/.keys')
+    job_options.add_argument('-v',
+                             '--version',
+                             default=False,
+                             action='store_true',
+                             help='Print the version and exit.')
 
     # Add the 'lights' sub-command.
     light_job_options = job_options.add_subparsers(dest='command')
@@ -303,6 +309,9 @@ def main():
                                help='Validate a color using the LIFX API.')
 
     args = job_options.parse_args()
+
+    if args.version:
+        print(f"Version: {VERSION}")
 
     # Configure authentication.
     if args.configure:
