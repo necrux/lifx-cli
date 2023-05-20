@@ -312,6 +312,7 @@ def main():
 
     if args.version:
         print(f"Version: {VERSION}")
+        sys.exit(0)
 
     # Configure authentication.
     if args.configure:
