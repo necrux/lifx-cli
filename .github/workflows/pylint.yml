@@ -23,4 +23,4 @@ jobs:
         pip install -e .
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py') --fail-under=9.50
+        pylint $(git ls-files '*.py') --fail-under=10.00
