@@ -48,7 +48,8 @@ function increment_version {
 
 # Input validation.
 if [ -z ${NEW_VERSION} ]; then
-    err 5 "Must supply a new version number."
+    echo "Current Tagged Version: ${CURRENT_VERSION}"
+    err 5 "Must supply a new version number to continue."
 fi
 
 if ! echo ${NEW_VERSION} | grep -q "^[0-9]*\.[0-9]*\.[0-9]*$"; then
