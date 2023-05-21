@@ -1,6 +1,6 @@
 # The Unofficial LIFX CLI [![Latest Version](https://img.shields.io/pypi/v/lifx-cli.svg)](https://pypi.org/project/lifx-cli/)
 
-[![CI/CD](https://github.com/necrux/lifx-cli/actions/workflows/python-publish.yml/badge.svg)](https://github.com/necrux/lifx-cli/actions/workflows/python-publish.yml)[![Linter](https://github.com/necrux/lifx-cli/actions/workflows/pylint.yml/badge.svg)](https://github.com/necrux/lifx-cli/actions/workflows/pylint.yml)[![Tests](https://github.com/necrux/lifx-cli/actions/workflows/pytest.yml/badge.svg)](https://github.com/necrux/lifx-cli/actions/workflows/pytest.yml)[![License](https://img.shields.io/pypi/l/lifx-cli.svg)](https://github.com/necrux/lifx-cli/blob/main/LICENSE)
+[![CI/CD](https://github.com/necrux/lifx-cli/actions/workflows/python-publish.yml/badge.svg)](https://github.com/necrux/lifx-cli/actions/workflows/python-publish.yml)[![Linter](https://github.com/necrux/lifx-cli/actions/workflows/pylint.yml/badge.svg)](https://github.com/necrux/lifx-cli/actions/workflows/pylint.yml)[![Tests](https://github.com/necrux/lifx-cli/actions/workflows/pytest.yml/badge.svg)](https://github.com/necrux/lifx-cli/actions/workflows/pytest.yml)[![License](https://img.shields.io/pypi/l/lifx-cli.svg)](https://github.com/necrux/lifx-cli/blob/main/LICENSE)[![Python-Support](https://img.shields.io/pypi/pyversions/lifx-cli.svg)](https://pypi.org/project/lifx-cli/)
 
 This is a work in progress to create a feature-rich LIFX CLI.
 
