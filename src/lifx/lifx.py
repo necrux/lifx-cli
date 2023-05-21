@@ -21,7 +21,7 @@ LOGO = """
 ███████ ██ ██      ██   ██      ██████ ███████ ██
 
 """
-VERSION = "2.5.2"
+VERSION = "2.5.3"
 
 
 def colors_sub_command(args):
