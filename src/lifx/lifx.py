@@ -153,7 +153,8 @@ def main():
     # Create the parser
     description = 'Control LIFX devices via the CLI!'
     epilog = 'Run `lifx --configure` to setup authentication.'
-    job_options = argparse.ArgumentParser(description=description, epilog=epilog)
+    job_options = argparse.ArgumentParser(description=description,
+                                          epilog=epilog)
 
     # Add the arguments
     job_options.add_argument('-c',
@@ -169,7 +170,8 @@ def main():
 
     # Add the 'lights' sub-command.
     light_job_options = job_options.add_subparsers(dest='command')
-    light_command = light_job_options.add_parser('lights', help='Light specific functions.')
+    light_command = light_job_options.add_parser('lights',
+                                                 help='Light specific functions.')
     light_command.add_argument('-l',
                                '--list',
                                default=False,
@@ -233,7 +235,8 @@ def main():
                                help='State: How many seconds should the action take. [Default: 1]')
 
     # Add the 'scenes' sub-command.
-    scene_command = light_job_options.add_parser('scenes', help='Scene specific functions.')
+    scene_command = light_job_options.add_parser('scenes',
+                                                 help='Scene specific functions.')
     scene_command.add_argument('-l',
                                '--list',
                                default=False,
@@ -249,11 +252,11 @@ def main():
                                help='Activate scene.')
 
     # Add the 'effects' sub-command.
-    effects_description = 'Control lighting effects.'
     effects_epilog = "Note: The CLI can only control effects stored on your light's firmware."
-    effects_help = 'Effects specific functions.'
-    effect_command = light_job_options.add_parser('effects', description=effects_description,
-                                                  epilog=effects_epilog, help=effects_help)
+    effect_command = light_job_options.add_parser('effects',
+                                                  description='Control lighting effects.',
+                                                  epilog=effects_epilog,
+                                                  help='Effects specific functions.')
     effect_command.add_argument('-l',
                                 '--list',
                                 default=False,
@@ -291,10 +294,9 @@ def main():
                                 help='Effects: Stop')
 
     # Add the 'Colors' sub-command.
-    colors_description = 'Explore all of the color-related options!'
-    colors_help = 'Learn how to provide colors to the CLI.'
-    color_command = light_job_options.add_parser('colors', description=colors_description,
-                                                 help=colors_help)
+    color_command = light_job_options.add_parser('colors',
+                                                 description='Explore color-related options!',
+                                                 help='Learn how to provide colors to the CLI.')
     color_command.add_argument('-l',
                                '--list',
                                default=False,
