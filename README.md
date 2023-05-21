@@ -1,4 +1,4 @@
-# The Unofficial LIFX CLI
+# The Unofficial LIFX CLI - [![CI/CD](https://github.com/necrux/lifx-cli/actions/workflows/python-publish.yml/badge.svg)](https://github.com/necrux/lifx-cli/actions/workflows/python-publish.yml)
 
 This is a work in progress to create a feature-rich LIFX CLI.
 
