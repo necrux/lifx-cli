@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Control LIFX lights and effects."""
+"""Control LIFX lights."""
 import sys
 import json
 from requests import get, post, put
@@ -10,7 +10,7 @@ API = 'https://api.lifx.com/v1'
 
 
 class Lights:
-    """Control LIFX lights and effects."""
+    """Control LIFX lights."""
 
     def __init__(self):
         self.auth = Auth()
