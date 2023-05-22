@@ -24,6 +24,12 @@ LOGO = """
 VERSION = "2.5.3"
 
 
+def get_version():
+    """Print the version and exit."""
+    print(f"Version: {VERSION}")
+    sys.exit(0)
+
+
 def colors_sub_command(args):
     """Control the actions for the 'colors' sub-command."""
     colors = Colors()
@@ -51,14 +57,16 @@ def effects_sub_command(args):
         light_id = args[1]
         group = args[2]
         color = args[3]
-        breathe = args[4]
-        pulse = args[5]
-        stop = args[6]
+        cycles = args[4]
+        breathe = args[5]
+        pulse = args[6]
+        stop = args[7]
     else:
         list_effects = args.list_effects
         light_id = args.light_id
         group = args.group
         color = args.color
+        cycles = args.cycles
         breathe = args.breathe
         pulse = args.pulse
         stop = args.stop
@@ -68,10 +76,14 @@ def effects_sub_command(args):
     elif not light_id:
         print("Must specify a light/group ID.")
         sys.exit(4)
+    elif light_id and not color:
+        print("Must specify at least 1 color.")
+        sys.exit(5)
+
     if breathe:
-        effects.breathe_effect(light_id, group, color)
+        effects.breathe_effect(light_id, group, color, cycles)
     elif pulse:
-        effects.pulse_effect(light_id, group, color)
+        effects.pulse_effect(light_id, group, color, cycles)
     elif stop:
         effects.stop_effect(light_id, group)
 
@@ -280,6 +292,11 @@ def main():
                                 default=[],
                                 action='append',
                                 help='Set the color; add multiple -c options to alternate colors.')
+    effect_command.add_argument('-y',
+                                '--cycles',
+                                default=10,
+                                action='store',
+                                help='Number of cycles to perform the effect. [Default: 10]')
     effect_command.add_argument('--breathe',
                                 default=False,
                                 action='store_true',
@@ -313,8 +330,7 @@ def main():
     args = job_options.parse_args()
 
     if args.version:
-        print(f"Version: {VERSION}")
-        sys.exit(0)
+        get_version()
 
     # Configure authentication.
     if args.configure:

@@ -25,20 +25,20 @@ class Effects:
         print(tabulate(EFFECTS, headers=["Name", "Description"]))
         print(f"\n{EFFECTS_NOTICE}")
 
-    def breathe_effect(self, light_id, group, color):
+    def breathe_effect(self, light_id, group, color, cycles):
         """Activates the breath effect (period: 2; cycles: 10).
         Requires the device ID and color."""
 
         if len(color) == 1:
             data = {
                 "period": 2,
-                "cycles": 10,
+                "cycles": {cycles},
                 "color": f"{color[0]}",
             }
         else:
             data = {
                 "period": 2,
-                "cycles": 10,
+                "cycles": {cycles},
                 "from_color": f"{color[0]}",
                 "color": f"{color[1]}",
             }
@@ -55,20 +55,20 @@ class Effects:
         else:
             sys.exit(0)
 
-    def pulse_effect(self, light_id, group, color):
+    def pulse_effect(self, light_id, group, color, cycles):
         """Activates the pulse effect (period: 2; cycles: 10).
         Requires the device ID and color."""
 
         if len(color) == 1:
             data = {
                 "period": 2,
-                "cycles": 10,
+                "cycles": {cycles},
                 "color": f"{color[0]}",
             }
         else:
             data = {
                 "period": 2,
-                "cycles": 10,
+                "cycles": {cycles},
                 "from_color": f"{color[0]}",
                 "color": f"{color[1]}",
             }
