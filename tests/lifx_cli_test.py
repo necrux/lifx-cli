@@ -8,10 +8,13 @@ VERSION = "2.5.3"
 
 def test_version(capsys):
     """Test the version output."""
-    src.lifx.lifx.get_version()
+    with pytest.raises(SystemExit) as pytest_wrapped_e:
+        src.lifx.lifx.get_version()
     out, err = capsys.readouterr()
     assert f"Version: {VERSION}" in out
     assert err == ""
+    assert pytest_wrapped_e.type == SystemExit
+    assert pytest_wrapped_e.value.code == 0
 
 
 def test_colors(capsys):
