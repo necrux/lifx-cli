@@ -3,6 +3,9 @@
 import sys
 import configparser
 from os import path, environ, getenv
+from requests import get
+
+API = 'https://api.lifx.com/v1'
 
 
 class Auth:
@@ -17,9 +20,15 @@ class Auth:
 
     def configure(self):
         """Configure/update the ini file for API authentication."""
-
         config = configparser.RawConfigParser()
-        api_key = input('What is your API token?: ')
+        while True:
+            api_key = input('What is your API token?: ')
+            environ[self.auth_env_var] = api_key
+            if not self.validate_token():
+                print("API Token invalid.")
+                print("Token Setup Guide: https://api.developer.lifx.com/reference/authentication")
+            else:
+                break
 
         if path.exists(self.auth_file):
             config.read(self.auth_file)
@@ -41,10 +50,20 @@ class Auth:
 
                 with open(self.auth_file, 'w', encoding='UTF-8') as file:
                     config.write(file)
-
         sys.exit(0)
 
-    def auth(self):
+    def validate_token(self) -> bool:
+        """Validate a provided token by querying the color API."""
+        url = f'{API}/color?string=red'
+        response = get(url, headers=self.auth(), timeout=5)
+        if response.status_code == 401:
+            return False
+        if response.status_code != 200:
+            print("Received an unexpected response from LIFX. Please try again.")
+            return False
+        return True
+
+    def auth(self) -> dict:
         """Returns the headers required to authenticate to the LIFX API."""
 
         try:
@@ -62,5 +81,4 @@ class Auth:
         headers = {
             'Authorization': f'Bearer {token}',
         }
-
         return headers
