@@ -27,7 +27,7 @@ VERSION = "2.5.3"
 def get_version():
     """Print the version and exit."""
     print(f"Version: {VERSION}")
-    sys.exit(0)
+
 
 
 def colors_sub_command(args):

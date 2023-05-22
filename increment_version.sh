@@ -5,7 +5,8 @@ declare -l ANSWER
 NEW_VERSION=$1
 CURRENT_VERSION=$(git describe --tags --abbrev=0)
 FILES=('pyproject.toml'
-       'src/lifx/lifx.py')
+       'src/lifx/lifx.py'
+       'tests/lifx_cli_test.py')
 
 function is_command {
     local FAILURE

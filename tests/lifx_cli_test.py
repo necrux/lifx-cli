@@ -3,6 +3,16 @@
 import pytest
 import src.lifx.lifx
 
+VERSION = "2.5.3"
+
+
+def test_version(capsys):
+    """Test the version output."""
+    src.lifx.lifx.get_version()
+    out, err = capsys.readouterr()
+    assert f"Version: {VERSION}" in out
+    assert err == ""
+
 
 def test_colors(capsys):
     """Test the colors sub-command."""
