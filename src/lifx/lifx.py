@@ -29,7 +29,6 @@ def get_version():
     print(f"Version: {VERSION}")
 
 
-
 def colors_sub_command(args):
     """Control the actions for the 'colors' sub-command."""
     colors = Colors()
