@@ -28,20 +28,31 @@ class Lights:
 
         response = json.loads(response.content)
 
-        devices = []
+        lights = []
+        switches = []
 
         for _, value in enumerate(response):
-            label = value["label"]
-            ident = value["id"]
+            device = value["label"]
+            device_id = value["id"]
             power = value["power"]
             connected = value["connected"]
-            group = value["group"]["name"]
+            group_name = value["group"]["name"]
             group_id = value["group"]["id"]
 
-            devices += [[label, ident, power, connected, group, group_id]]
+            if value["product"]["product_id"] == 116:
+                switches += [[device, device_id, power, connected, group_name, group_id]]
+            else:
+                lights += [[device, device_id, power, connected, group_name, group_id]]
 
-        devices.sort()
-        print(tabulate(devices, headers=["Name", "ID", "State", "Connected", "Group", "Group ID"]))
+        lights.sort()
+        print(tabulate(lights,
+                       headers=["Light", "ID", "State", "Connected", "Group", "Group ID"]))
+
+        if len(switches) > 0:
+            switches.sort()
+            print("\n\n")
+            print(tabulate(switches,
+                           headers=["Switch", "ID", "State", "Connected", "Group", "Group ID"]))
 
     def toggle(self, light_id, group):
         """Toggles the power for the specified light. Requires the device ID."""
