@@ -50,7 +50,7 @@ def test_auth():
 def test_colors(capsys):
     """Test the 'colors' module."""
     colors = Colors()
-    colors.validate_color(color="blue")
+    colors.validate_color(color=TEST_COLORS[0])
     out, err = capsys.readouterr()
     assert "Saturation" in out
     assert err == ""
