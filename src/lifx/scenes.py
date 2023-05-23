@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """List and control LIFX scenes."""
 import sys
-import json
 from requests import get, put
 from tabulate import tabulate
 from src.lifx.auth import Auth
@@ -24,7 +23,7 @@ class Scenes:
             print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(40)
 
-        response = json.loads(response.content)
+        response = response.json()
 
         scenes = []
 

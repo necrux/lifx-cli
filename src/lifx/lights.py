@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Control LIFX lights."""
 import sys
-import json
 from requests import get, post, put
 from tabulate import tabulate
 from src.lifx.auth import Auth
@@ -24,7 +23,7 @@ class Lights:
             print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(30)
 
-        response = json.loads(response.content)
+        response = response.json()
 
         lights = []
         switches = []

@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Learn about how the CLI accepts color encoding."""
-import json
 import sys
-
 from requests import get
 from tabulate import tabulate
 from src.lifx.auth import Auth
@@ -39,7 +37,7 @@ class Colors:
         if response.status_code != 200:
             print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(10)
-        response = json.loads(response.content)
+        response = response.json()
 
         hue = response['hue'] or 'None'
         saturation = response['saturation'] or 'None'
