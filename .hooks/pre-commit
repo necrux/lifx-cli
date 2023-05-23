@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+BASE_PATH="$(git rev-parse --show-toplevel)"
+
+pushd "${BASE_PATH}" &>/dev/null
+    echo 'Linting code: pylint.'
+    pylint $(git ls-files '*.py')
+
+    echo 'Testing code: pytest.'
+    pytest tests/
+popd &>/dev/null
