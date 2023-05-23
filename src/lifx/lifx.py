@@ -83,7 +83,6 @@ def lights_sub_command(args):
     toggle = args.toggle
     group = args.group
     clean_duration = args.clean_duration
-    state = args.state
     color = args.color
     power = args.power
     brightness = args.brightness
@@ -98,11 +97,9 @@ def lights_sub_command(args):
 
     if toggle:
         light.toggle(light_id, group)
-
-    if clean_duration:
+    elif clean_duration:
         light.clean(light_id, group, clean_duration)
-
-    if state:
+    elif color:
         state_attributes = {'power': power,
                             'brightness': brightness,
                             'duration': duration,
@@ -149,10 +146,11 @@ def main(argv=None):
                              action='store_true',
                              help='Print the version and exit.')
 
+    subcommand_job_options = job_options.add_subparsers(dest='command')
+
     # Add the 'lights' sub-command.
-    light_job_options = job_options.add_subparsers(dest='command')
-    light_command = light_job_options.add_parser('lights',
-                                                 help='Light specific functions.')
+    light_command = subcommand_job_options.add_parser('lights',
+                                                      help='Light specific functions.')
     light_command.add_argument('-l',
                                '--list',
                                default=False,
@@ -178,11 +176,6 @@ def main(argv=None):
                                dest='group',
                                action='store_true',
                                help='Specify whether or not the target is a group.')
-    light_command.add_argument('-s',
-                               '--state',
-                               default=False,
-                               action='store_true',
-                               help='Set the state for the specified light.')
     light_command.add_argument('-n',
                                '--clean',
                                default=False,
@@ -191,9 +184,9 @@ def main(argv=None):
                                help='Turn on Clean mode for N seconds.')
     light_command.add_argument('-c',
                                '--color',
-                               default='green',
+                               default=False,
                                action='store',
-                               help='Use the specified color. [Default: green]')
+                               help='State: Use the specified color.')
     light_command.add_argument('-p',
                                '--power',
                                default='on',
@@ -216,8 +209,8 @@ def main(argv=None):
                                help='State: How many seconds should the action take. [Default: 1]')
 
     # Add the 'scenes' sub-command.
-    scene_command = light_job_options.add_parser('scenes',
-                                                 help='Scene specific functions.')
+    scene_command = subcommand_job_options.add_parser('scenes',
+                                                      help='Scene specific functions.')
     scene_command.add_argument('-l',
                                '--list',
                                default=False,
@@ -234,10 +227,10 @@ def main(argv=None):
 
     # Add the 'effects' sub-command.
     effects_epilog = "Note: The CLI can only control effects stored on your light's firmware."
-    effect_command = light_job_options.add_parser('effects',
-                                                  description='Control lighting effects.',
-                                                  epilog=effects_epilog,
-                                                  help='Effects specific functions.')
+    effect_command = subcommand_job_options.add_parser('effects',
+                                                       description='Control lighting effects.',
+                                                       epilog=effects_epilog,
+                                                       help='Effects specific functions.')
     effect_command.add_argument('-l',
                                 '--list',
                                 default=False,
@@ -280,9 +273,9 @@ def main(argv=None):
                                 help='Effects: Stop')
 
     # Add the 'Colors' sub-command.
-    color_command = light_job_options.add_parser('colors',
-                                                 description='Explore color-related options!',
-                                                 help='Learn how to provide colors to the CLI.')
+    color_command = subcommand_job_options.add_parser('colors',
+                                                      description='Explore color-related options!',
+                                                      help='Learn how to use colors on the CLI.')
     color_command.add_argument('-l',
                                '--list',
                                default=False,
