@@ -23,7 +23,7 @@ class Lights:
         response = get(url, headers=self.auth_headers, timeout=5)
 
         if response.status_code != 200:
-            print(f"HTTP request failed. State code: {response.status_code}")
+            print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(30)
 
         response = json.loads(response.content)
@@ -64,7 +64,7 @@ class Lights:
         response = post(url, headers=self.auth_headers, timeout=5)
 
         if response.status_code != 207:
-            print(f"HTTP request failed. State code: {response.status_code}")
+            print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(31)
         else:
             sys.exit(0)
@@ -86,8 +86,12 @@ class Lights:
         url = f"{API}/lights/{light_id}/state"
         response = put(url, data=payload, headers=self.auth_headers, timeout=5)
 
-        if response.status_code != 207:
-            print(f"HTTP request failed. State code: {response.status_code}")
+        if response.status_code == 404:
+            print(f"HTTP request failed. Status code: {response.status_code}")
+            print("Is the light ID correct? Are you trying to target a group?")
+            sys.exit(33)
+        elif response.status_code != 207:
+            print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(32)
         else:
             sys.exit(0)
@@ -107,7 +111,7 @@ class Lights:
         response = post(url, data=payload, headers=self.auth_headers, timeout=5)
 
         if response.status_code != 207:
-            print(f"HTTP request failed. State code: {response.status_code}")
+            print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(33)
         else:
             sys.exit(0)

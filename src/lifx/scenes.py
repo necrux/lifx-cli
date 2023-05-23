@@ -23,7 +23,7 @@ class Scenes:
         response = get(url, headers=self.auth_headers, timeout=5)
 
         if response.status_code != 200:
-            print(f"HTTP request failed. State code: {response.status_code}")
+            print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(40)
 
         response = json.loads(response.content)
@@ -43,7 +43,7 @@ class Scenes:
         response = put(url, headers=self.auth_headers, timeout=5)
 
         if response.status_code != 207:
-            print(f"HTTP request failed. State code: {response.status_code}")
+            print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(41)
         else:
             sys.exit(0)

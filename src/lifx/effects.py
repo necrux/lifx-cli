@@ -50,7 +50,7 @@ class Effects:
         response = post(url, data=data, headers=self.auth_headers, timeout=5)
 
         if response.status_code != 207:
-            print(f"HTTP request failed. State code: {response.status_code}")
+            print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(20)
         else:
             sys.exit(0)
@@ -80,7 +80,7 @@ class Effects:
         response = post(url, data=data, headers=self.auth_headers, timeout=5)
 
         if response.status_code != 207:
-            print(f"HTTP request failed. State code: {response.status_code}")
+            print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(21)
         else:
             sys.exit(0)
@@ -99,7 +99,7 @@ class Effects:
         response = post(url, data=data, headers=self.auth_headers, timeout=5)
 
         if response.status_code != 207:
-            print(f"HTTP request failed. State code: {response.status_code}")
+            print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(22)
         else:
             sys.exit(0)

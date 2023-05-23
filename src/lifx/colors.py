@@ -38,7 +38,7 @@ class Colors:
         url = f'{API}/color?string={color}'
         response = get(url, headers=self.auth_headers, timeout=5)
         if response.status_code != 200:
-            print(f"HTTP request failed. State code: {response.status_code}")
+            print(f"HTTP request failed. Status code: {response.status_code}")
             sys.exit(10)
         response = json.loads(response.content)
 
