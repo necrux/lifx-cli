@@ -26,9 +26,7 @@ class Effects:
         print(f"\n{EFFECTS_NOTICE}")
 
     def breathe_effect(self, light_id, group, color, cycles):
-        """Activates the breath effect (period: 2; cycles: 10).
-        Requires the device ID and color."""
-
+        """Activates the breath effect. Requires the device ID and color."""
         if len(color) == 1:
             data = {
                 "period": 2,
@@ -56,9 +54,7 @@ class Effects:
             sys.exit(0)
 
     def pulse_effect(self, light_id, group, color, cycles):
-        """Activates the pulse effect (period: 2; cycles: 10).
-        Requires the device ID and color."""
-
+        """Activates the pulse effect. Requires the device ID and color."""
         if len(color) == 1:
             data = {
                 "period": 2,
@@ -87,7 +83,6 @@ class Effects:
 
     def stop_effect(self, light_id, group):
         """Stop all effects on the specified light. Requires Light ID."""
-
         data = {
             "power_off": True
         }

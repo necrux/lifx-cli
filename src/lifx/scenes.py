@@ -18,7 +18,6 @@ class Scenes:
 
     def get(self):
         """Print a list of all scenes on this account."""
-
         url = f'{API}/scenes'
         response = get(url, headers=self.auth_headers, timeout=5)
 
@@ -38,7 +37,6 @@ class Scenes:
 
     def activate(self, scene_id):
         """Activates the specified scene. Requires scene UUID."""
-
         url = f'{API}/scenes/scene_id:{scene_id}/activate'
         response = put(url, headers=self.auth_headers, timeout=5)
 

@@ -18,7 +18,6 @@ class Lights:
 
     def get(self):
         """Print a list of all LIFX devices on this account."""
-
         url = f'{API}/lights/all'
         response = get(url, headers=self.auth_headers, timeout=5)
 
@@ -56,7 +55,6 @@ class Lights:
 
     def toggle(self, light_id, group):
         """Toggles the power for the specified light. Requires the device ID."""
-
         if group:
             light_id = f'group_id:{light_id}'
 
@@ -71,7 +69,6 @@ class Lights:
 
     def set_state(self, light_id, group, color, state_attributes):
         """Changes the state for the specified light. Requires the device ID."""
-
         payload = {
             "power": f"{state_attributes['power']}",
             "color": f"{color}",
@@ -98,7 +95,6 @@ class Lights:
 
     def clean(self, light_id, group, duration):
         """Switches a light to clean mode. Requires the device ID."""
-
         if group:
             light_id = f'group_id:{light_id}'
 

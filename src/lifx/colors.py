@@ -29,7 +29,6 @@ class Colors:
     @staticmethod
     def color_information():
         """Print color formatting information."""
-
         print(tabulate(COLOR_TABLE, headers=["Format", "Example", "Notes"]))
 
     def validate_color(self, color):
