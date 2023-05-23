@@ -16,12 +16,6 @@ TEST_CYCLES = 4
 TEST_LIGHT = "d073d568d053"
 TEST_SCENE = "9371a59c-6ee7-4ced-a3d3-b25d9fc08aad"
 
-auth = Auth()
-colors = Colors()
-effects = Effects()
-lights = Lights()
-scenes = Scenes()
-
 
 @pytest.mark.parametrize("option", ("-v", "--version"))
 def test_version(capsys, option):
@@ -49,11 +43,13 @@ def test_help(capsys, option):
 
 def test_auth():
     """Validate the API token."""
+    auth = Auth()
     assert auth.validate_token()
 
 
 def test_colors(capsys):
-    """Test the colors sub-command."""
+    """Test the 'colors' module."""
+    colors = Colors()
     colors.validate_color(color="blue")
     out, err = capsys.readouterr()
     assert "Saturation" in out
@@ -61,7 +57,8 @@ def test_colors(capsys):
 
 
 def test_effects():
-    """Test the effects sub-command (lights will flash at Wes' home)."""
+    """Test the 'effects' module (lights will flash at Wes' home)."""
+    effects = Effects()
     with pytest.raises(SystemExit) as pytest_wrapped_e:
         effects.breathe_effect(light_id=TEST_GROUP, group=True,
                                color=TEST_COLORS, cycles=TEST_CYCLES)
@@ -70,7 +67,8 @@ def test_effects():
 
 
 def test_lights(capsys):
-    """Test the lights sub-command."""
+    """Test the 'lights' module."""
+    lights = Lights()
     lights.get()
     out, err = capsys.readouterr()
     assert TEST_LIGHT in out
@@ -78,7 +76,8 @@ def test_lights(capsys):
 
 
 def test_scenes(capsys):
-    """Test the scenes sub-command."""
+    """Test the 'scenes' module."""
+    scenes = Scenes()
     scenes.get()
     out, err = capsys.readouterr()
     assert TEST_SCENE in out
