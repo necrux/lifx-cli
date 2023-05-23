@@ -34,12 +34,8 @@ def colors_sub_command(args):
     """Control the actions for the 'colors' sub-command."""
     colors = Colors()
 
-    if isinstance(args, list):
-        list_colors = args[0]
-        provided_color = args[1]
-    else:
-        list_colors = args.list_colors
-        provided_color = args.colors
+    list_colors = args.list_colors
+    provided_color = args.colors
 
     if list_colors:
         colors.color_information()
@@ -52,24 +48,14 @@ def effects_sub_command(args):
     """Control the actions for the 'effects' sub-command."""
     effects = Effects()
 
-    if isinstance(args, list):
-        list_effects = args[0]
-        light_id = args[1]
-        group = args[2]
-        color = args[3]
-        cycles = args[4]
-        breathe = args[5]
-        pulse = args[6]
-        stop = args[7]
-    else:
-        list_effects = args.list_effects
-        light_id = args.light_id
-        group = args.group
-        color = args.color
-        cycles = args.cycles
-        breathe = args.breathe
-        pulse = args.pulse
-        stop = args.stop
+    list_effects = args.list_effects
+    light_id = args.light_id
+    group = args.group
+    color = args.color
+    cycles = args.cycles
+    breathe = args.breathe
+    pulse = args.pulse
+    stop = args.stop
 
     if list_effects:
         effects.list_effects()
@@ -92,30 +78,17 @@ def lights_sub_command(args):
     """Control the actions for the 'lights' sub-command."""
     light = Lights()
 
-    if isinstance(args, list):
-        devices = args[0]
-        light_id = args[1]
-        toggle = args[2]
-        group = args[3]
-        clean_duration = args[4]
-        state = args[5]
-        color = args[6]
-        power = args[7]
-        brightness = args[8]
-        infrared = args[9]
-        duration = args[10]
-    else:
-        devices = args.list_devices
-        light_id = args.light_id
-        toggle = args.toggle
-        group = args.group
-        clean_duration = args.clean_duration
-        state = args.state
-        color = args.color
-        power = args.power
-        brightness = args.brightness
-        infrared = args.infrared
-        duration = args.duration
+    devices = args.list_devices
+    light_id = args.light_id
+    toggle = args.toggle
+    group = args.group
+    clean_duration = args.clean_duration
+    state = args.state
+    color = args.color
+    power = args.power
+    brightness = args.brightness
+    infrared = args.infrared
+    duration = args.duration
 
     if devices:
         light.get()
@@ -141,12 +114,8 @@ def scenes_sub_command(args):
     """Control the actions for the 'scenes' sub-command."""
     scene = Scenes()
 
-    if isinstance(args, list):
-        scenes = args[0]
-        scene_id = args[1]
-    else:
-        scenes = args.list_scenes
-        scene_id = args.scene_id
+    scenes = args.list_scenes
+    scene_id = args.scene_id
 
     if scenes:
         scene.get()
@@ -158,7 +127,7 @@ def scenes_sub_command(args):
         scene.activate(scene_id)
 
 
-def main():
+def main(argv=None):
     """Main entrypoint for the LIFX CLI."""
     auth = Auth()
     print(LOGO)
@@ -327,7 +296,7 @@ def main():
                                action='store',
                                help='Validate a color using the LIFX API.')
 
-    args = job_options.parse_args()
+    args = job_options.parse_args(argv)
 
     if args.version:
         get_version()
