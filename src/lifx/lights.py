@@ -11,7 +11,6 @@ API = 'https://api.lifx.com/v1'
 
 class Lights:
     """Control LIFX lights."""
-
     def __init__(self):
         self.auth = Auth()
         self.auth_headers = self.auth.auth()

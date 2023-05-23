@@ -65,7 +65,6 @@ class Auth:
 
     def auth(self) -> dict:
         """Returns the headers required to authenticate to the LIFX API."""
-
         try:
             if environ.get(self.auth_env_var):
                 token = getenv(self.auth_env_var)
@@ -79,6 +78,6 @@ class Auth:
             self.configure()
 
         headers = {
-            'Authorization': f'Bearer {token}',
+            "Authorization": f"Bearer {token}",
         }
         return headers
