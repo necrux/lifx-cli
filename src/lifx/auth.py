@@ -34,7 +34,6 @@ class Auth:
             config.read(self.auth_file)
 
         if not config.has_section(self.auth_file_section):
-            config = configparser.RawConfigParser()
             config.add_section(self.auth_file_section)
             config.set(self.auth_file_section, self.auth_file_key, api_key)
 
