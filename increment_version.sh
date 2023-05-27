@@ -59,8 +59,7 @@ fi
 
 is_command gawk
 
-echo "Current Tagged Version: ${CURRENT_VERSION}"
-read -p "Are you certain that you want to increment to version ${NEW_VERSION}? y/N " ANSWER
+read -p "Are you certain that you want to increment to version: ${CURRENT_VERSION} -> ${NEW_VERSION}? y/N " ANSWER
 
 if [ "${ANSWER}" == "y" ]; then
     increment_version
