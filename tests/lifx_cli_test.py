@@ -8,7 +8,7 @@ from src.lifx.effects import Effects
 from src.lifx.lights import Lights
 from src.lifx.scenes import Scenes
 
-VERSION = "2.5.6"
+VERSION = "2.5.7"
 TEST_HELP = "Control LIFX devices via the CLI!"
 TEST_GROUP = "68931117c352834e0a8f70aebcbcdae1"
 TEST_COLORS = ["purple", "green"]
