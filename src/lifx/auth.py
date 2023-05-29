@@ -21,6 +21,8 @@ class Auth:
     def configure(self):
         """Configure/update the ini file for API authentication."""
         config = configparser.RawConfigParser()
+        config.read(self.auth_file)
+
         while True:
             api_key = input('What is your API token?: ')
             environ[self.auth_env_var] = api_key
@@ -30,14 +32,11 @@ class Auth:
             else:
                 break
 
-        if path.exists(self.auth_file):
-            config.read(self.auth_file)
-
         if not config.has_section(self.auth_file_section):
             config.add_section(self.auth_file_section)
             config.set(self.auth_file_section, self.auth_file_key, api_key)
 
-            with open(self.auth_file, 'a+', encoding='UTF-8') as file:
+            with open(self.auth_file, 'w', encoding='UTF-8') as file:
                 config.write(file)
         else:
             overwrite = input('You already have an API key saved in ~/.keys. '
